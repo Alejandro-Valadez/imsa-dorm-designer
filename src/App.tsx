@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { CameraViewMode, LightingMode, PlacedItem, RoomConfig, FurnitureItemDefinition } from './types';
 import { PRESET_LAYOUTS, FURNITURE_CATALOG } from './data/furnitureCatalog';
@@ -11,12 +11,12 @@ import { InventoryModal } from './components/InventoryModal';
 import { PresetSelectorModal } from './components/PresetSelectorModal';
 
 export const App: React.FC = () => {
-  // 1. Room Configuration
+  // 1. Room Configuration (IMSA Standard Double: 11'8" x 15'0" living room)
   const [roomConfig, setRoomConfig] = useState<RoomConfig>({
     type: 'standard-double',
     name: 'Standard Double Room',
-    width: 12,
-    length: 15,
+    width: 11.67, // 11'8"
+    length: 15.0, // 15'0"
     ceilingHeight: 8.5,
     bathroomPosition: 'left-entry',
     hasQuadDoor: false,
@@ -40,7 +40,7 @@ export const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<CameraViewMode>('orbit-3d');
   const [lightingMode, setLightingMode] = useState<LightingMode>('day');
   const [cutawayWalls, setCutawayWalls] = useState<boolean>(true);
-  const [snapGrid] = useState<number>(0.5); // 6 inches snap
+  const [snapGrid] = useState<number>(0.25); // 3-inch fine snap grid
 
   // 4. Modals
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
@@ -60,19 +60,51 @@ export const App: React.FC = () => {
   }, 0);
   const walkablePercent = Math.max(0, Math.round(((roomArea - occupiedArea) / roomArea) * 100));
 
-  // Compute live safety warnings count
+  // Compute live safety warnings count (Handbook p.51-52 compliance)
+  const doorMargin = 1.0;
+  const doorWidth = 3.0;
+  const doorX = roomConfig.width / 2 - doorMargin - doorWidth / 2;
+  const doorZ = roomConfig.length / 2;
   const doorBlocked = placedItems.some((item) => {
-    const doorX = roomConfig.width / 2 - 1.8;
-    const doorZ = roomConfig.length / 2;
     return Math.hypot(item.x - doorX, item.z - doorZ) < 3.0 && item.y < 2.0;
   });
+
+  // PTAC 2ft clearance check
+  const ptacBlocked = placedItems.some((item) => {
+    const dx = Math.abs(item.x - 0);
+    const dz = item.z - (-roomConfig.length / 2 + 0.4);
+    return dx < 2.5 && dz > 0 && dz < 2.0 && item.y < 3.0;
+  });
+
+  // Refrigerator limit
   const fridgeCount = placedItems.filter((i) => i.definitionId === 'dorm-microfridge').length;
-  const warningCount = (doorBlocked ? 1 : 0) + (fridgeCount > 1 ? 1 : 0);
+  
+  // Wall rule check
+  const bedsAndWardrobes = placedItems.filter(
+    (i) => i.definitionId === 'imsa-bunk-bed' || i.definitionId === 'imsa-single-bed' || i.definitionId === 'imsa-wardrobe'
+  );
+  const hasFloatingItem = bedsAndWardrobes.some((item) => {
+    const def = FURNITURE_CATALOG.find((d) => d.id === item.definitionId);
+    if (!def) return false;
+    const halfW = roomConfig.width / 2;
+    const halfL = roomConfig.length / 2;
+    const distToLeft = Math.abs(item.x - (-halfW));
+    const distToRight = Math.abs(item.x - halfW);
+    const distToNorth = Math.abs(item.z - (-halfL));
+    const distToSouth = Math.abs(item.z - halfL);
+    const minDist = Math.min(distToLeft, distToRight, distToNorth, distToSouth);
+    return minDist > Math.max(def.width, def.depth) / 2 + 1.2;
+  });
+
+  const warningCount =
+    (doorBlocked ? 1 : 0) +
+    (ptacBlocked ? 1 : 0) +
+    (fridgeCount > 1 ? 1 : 0) +
+    (hasFloatingItem ? 1 : 0);
 
   // Item Management Handlers
   const handleAddItem = (def: FurnitureItemDefinition) => {
-    // Place near center of room with slight randomness
-    const offset = (Math.random() - 0.5) * 2;
+    const offset = (Math.random() - 0.5) * 1.5;
     const newItem: PlacedItem = {
       instanceId: `item_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
       definitionId: def.id,
@@ -120,133 +152,94 @@ export const App: React.FC = () => {
     );
   };
 
-  const handleChangeOwner = (
-    instanceId: string,
-    owner: 'Resident A' | 'Resident B' | 'Shared'
-  ) => {
+  const handleChangeOwner = (instanceId: string, owner: 'Resident A' | 'Resident B' | 'Shared') => {
     setPlacedItems((prev) =>
       prev.map((item) => (item.instanceId === instanceId ? { ...item, owner } : item))
     );
   };
 
   const handleDeleteItem = (instanceId: string) => {
-    setPlacedItems((prev) => prev.filter((item) => item.instanceId !== instanceId));
+    setPlacedItems((prev) => prev.filter((i) => i.instanceId !== instanceId));
     if (selectedItemInstanceId === instanceId) {
       setSelectedItemInstanceId(null);
     }
   };
 
   const handleDuplicateItem = (instanceId: string) => {
-    const item = placedItems.find((p) => p.instanceId === instanceId);
+    const item = placedItems.find((i) => i.instanceId === instanceId);
     if (!item) return;
 
     const dup: PlacedItem = {
       ...item,
-      instanceId: `item_${Date.now()}_dup`,
-      x: Math.min(roomConfig.width / 2 - 1, item.x + 1),
-      z: Math.min(roomConfig.length / 2 - 1, item.z + 1),
+      instanceId: `item_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
+      x: item.x + 0.5,
+      z: item.z + 0.5,
     };
-
     setPlacedItems((prev) => [...prev, dup]);
     setSelectedItemInstanceId(dup.instanceId);
   };
 
-  // Apply Preset Layout
-  const handleApplyPreset = (items: any[], roomType: any) => {
-    if (roomType) {
-      setRoomConfig((prev) => ({ ...prev, type: roomType }));
-    }
-    const newPlaced = items.map((it, idx) => ({
-      ...it,
-      instanceId: `preset_${Date.now()}_${idx}`,
+  const handleApplyPreset = (presetItems: any[], presetRoomType: any) => {
+    setRoomConfig((prev) => ({
+      ...prev,
+      type: presetRoomType,
+      width: presetRoomType === 'standard-double' ? 11.67 : prev.width,
+      length: presetRoomType === 'standard-double' ? 15.0 : prev.length,
     }));
-    setPlacedItems(newPlaced);
+
+    const instantiated: PlacedItem[] = presetItems.map((it, idx) => ({
+      ...it,
+      instanceId: `item_${Date.now()}_${idx}`,
+    }));
+
+    setPlacedItems(instantiated);
     setSelectedItemInstanceId(null);
 
     confetti({
       particleCount: 50,
       spread: 60,
-      origin: { y: 0.8 },
-      colors: ['#002B49', '#C59B27', '#007A87'],
+      origin: { y: 0.6 },
+      colors: ['#002B49', '#F5C242', '#007A87'],
     });
-  };
-
-  // Snapshot PNG Download
-  const handleTakeSnapshot = () => {
-    if (!snapshotFnRef.current) return;
-    const dataUrl = snapshotFnRef.current();
-    const link = document.createElement('a');
-    link.download = `IMSA-Hall${roomConfig.hallNumber}-Wing${roomConfig.wing}-RoomPlan.png`;
-    link.href = dataUrl;
-    link.click();
-
-    confetti({
-      particleCount: 40,
-      spread: 50,
-      origin: { y: 0.2, x: 0.9 },
-    });
-  };
-
-  // Export layout JSON
-  const handleExportPlan = () => {
-    const plan = {
-      title: 'IMSA Dorm Room Layout',
-      version: '1.0',
-      exportedAt: new Date().toISOString(),
-      roomConfig,
-      placedItems,
-    };
-    const blob = new Blob([JSON.stringify(plan, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.download = `IMSA-Dorm-Plan-${roomConfig.hallNumber}-${roomConfig.wing}.json`;
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
-
-  // Import layout JSON
-  const handleImportPlan = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const json = JSON.parse(event.target?.result as string);
-        if (json.roomConfig && json.placedItems) {
-          setRoomConfig(json.roomConfig);
-          setPlacedItems(json.placedItems);
-          setSelectedItemInstanceId(null);
-        }
-      } catch (err) {
-        alert('Invalid layout file format.');
-      }
-    };
-    reader.readAsText(file);
   };
 
   const handleResetLayout = () => {
-    if (window.confirm('Reset all furniture layout to default empty room?')) {
-      setPlacedItems([]);
-      setSelectedItemInstanceId(null);
+    if (window.confirm('Reset this room back to the IMSA Classic Bunked layout?')) {
+      handleApplyPreset(PRESET_LAYOUTS[0].items, PRESET_LAYOUTS[0].roomType);
     }
   };
 
-  const selectedItem = placedItems.find((p) => p.instanceId === selectedItemInstanceId) || null;
+  const handleTakeSnapshot = () => {
+    if (snapshotFnRef.current) {
+      const dataUrl = snapshotFnRef.current();
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `IMSA-Hall${roomConfig.hallNumber}-Wing${roomConfig.wing}-Room${roomConfig.roomNumber}-DormPlan.png`;
+      a.click();
+    }
+  };
+
+  const handleExportPlan = () => {
+    const data = {
+      timestamp: new Date().toISOString(),
+      roomConfig,
+      placedItems,
+      generator: 'IMSA Dorm 3D Studio',
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `IMSA-RoomPlan-${roomConfig.hallNumber}-${roomConfig.wing}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const selectedItem = placedItems.find((i) => i.instanceId === selectedItemInstanceId) || null;
 
   return (
-    <div className="flex flex-col w-screen h-screen overflow-hidden bg-[#0B131E] font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* Hidden File Input for import */}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleImportPlan}
-        accept=".json"
-        className="hidden"
-      />
-
-      {/* Navigation Header */}
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#060B12] text-white font-sans antialiased">
+      {/* Top Navigation */}
       <HeaderNav
         roomConfig={roomConfig}
         onUpdateRoomConfig={(updates) => setRoomConfig((prev) => ({ ...prev, ...updates }))}
@@ -265,13 +258,13 @@ export const App: React.FC = () => {
         ruleWarningCount={warningCount}
       />
 
-      {/* Main Workspace Area */}
-      <div className="flex flex-1 relative overflow-hidden">
-        {/* Left Furniture & Decor Catalog */}
+      {/* Main Workspace */}
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Left Furniture Catalog */}
         <SidebarCatalog onAddItem={handleAddItem} />
 
-        {/* Center 3D Viewport */}
-        <div className="flex-1 relative h-full">
+        {/* 3D Viewport Canvas */}
+        <main className="flex-1 relative bg-gradient-to-b from-[#0A131F] to-[#04080E] overflow-hidden">
           <ThreeCanvas
             roomConfig={roomConfig}
             placedItems={placedItems}
@@ -287,7 +280,58 @@ export const App: React.FC = () => {
             }}
           />
 
-          {/* Floating Item Inspector Properties Panel */}
+          {/* HUD Top Left Stats Bar */}
+          <div className="absolute top-4 left-4 bg-[#0B1726]/90 backdrop-blur-md border border-[#1E3A5F] rounded-2xl px-4 py-2.5 shadow-xl flex items-center space-x-4 text-xs select-none">
+            <div>
+              <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                Room Dimensions
+              </div>
+              <div className="font-bold text-white font-mono flex items-center gap-1">
+                <span>11′8″ × 15′0″</span>
+                <span className="text-slate-400 font-normal">({Math.round(roomArea)} sq. ft.)</span>
+              </div>
+            </div>
+
+            <div className="h-6 w-px bg-[#1E3A5F]" />
+
+            <div>
+              <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                Walkable Floor
+              </div>
+              <div className="font-bold text-emerald-400 font-mono">
+                {walkablePercent}% open
+              </div>
+            </div>
+
+            <div className="h-6 w-px bg-[#1E3A5F]" />
+
+            <div>
+              <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                Placed Items
+              </div>
+              <div className="font-bold text-amber-300 font-mono">
+                {placedItems.length} pieces
+              </div>
+            </div>
+          </div>
+
+          {/* HUD Bottom Left Legend */}
+          <div className="absolute bottom-4 left-4 bg-[#0B1726]/85 backdrop-blur-md border border-[#1E3A5F] rounded-xl px-3 py-2 text-[11px] text-slate-400 select-none flex items-center gap-3">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#1e3a5f] border border-[#2b4c7e]"></span>
+              Official Furniture
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+              PTAC Unit Zone (2ft buffer)
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-teal-500/80"></span>
+              En-Suite Private Bath
+            </span>
+          </div>
+
+          {/* Active Item Properties Inspector */}
           <ItemPropertiesPanel
             selectedItem={selectedItem}
             onDeselect={() => setSelectedItemInstanceId(null)}
@@ -298,55 +342,11 @@ export const App: React.FC = () => {
             onChangeOwner={handleChangeOwner}
             onChangeElevation={handleElevationChange}
           />
-
-          {/* Bottom HUD: Room Dimensions, Walkable Area, Instructions */}
-          <div className="absolute bottom-4 left-4 right-4 pointer-events-none flex items-center justify-between">
-            {/* Room Dimension & Space Stats */}
-            <div className="pointer-events-auto bg-[#001D33]/90 backdrop-blur-md border border-[#1E3A5F] rounded-xl px-4 py-2.5 shadow-xl flex items-center space-x-4 text-xs">
-              <div>
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">
-                  Room Dimensions
-                </span>
-                <span className="font-mono text-white font-semibold">
-                  {roomConfig.width}' × {roomConfig.length}' ({roomArea} sq. ft)
-                </span>
-              </div>
-
-              <div className="h-6 w-px bg-slate-700/60" />
-
-              <div>
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">
-                  Walkable Floor Space
-                </span>
-                <span className="font-mono text-emerald-400 font-semibold">
-                  {walkablePercent}% open ({Math.round(roomArea - occupiedArea)} sq. ft)
-                </span>
-              </div>
-
-              <div className="h-6 w-px bg-slate-700/60" />
-
-              <div>
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">
-                  Items Placed
-                </span>
-                <span className="font-mono text-[#F5C242] font-semibold">
-                  {placedItems.length} objects
-                </span>
-              </div>
-            </div>
-
-            {/* Quick 3D Interaction Tip */}
-            <div className="pointer-events-auto bg-[#001D33]/85 backdrop-blur-md border border-[#1E3A5F] rounded-xl px-3 py-2 text-[11px] text-slate-300 shadow-xl flex items-center space-x-2">
-              <span className="text-amber-400">💡</span>
-              <span>
-                <strong className="text-white">Left-click</strong> & drag items to move ·{' '}
-                <strong className="text-white">Right-click</strong> to orbit room ·{' '}
-                <strong className="text-white">Scroll</strong> to zoom
-              </span>
-            </div>
-          </div>
-        </div>
+        </main>
       </div>
+
+      {/* Hidden File Input for JSON import */}
+      <input type="file" ref={fileInputRef} className="hidden" accept=".json" />
 
       {/* Modals */}
       <PolicyCheckerModal

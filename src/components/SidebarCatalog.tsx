@@ -1,7 +1,7 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { FurnitureCategory, FurnitureItemDefinition } from '../types';
 import { FURNITURE_CATALOG } from '../data/furnitureCatalog';
-import { Search, Plus, Info, CheckCircle2 } from 'lucide-react';
+import { Search, Plus, Info, CheckCircle2, ShieldCheck, Ruler } from 'lucide-react';
 
 interface SidebarCatalogProps {
   onAddItem: (itemDef: FurnitureItemDefinition) => void;
@@ -73,8 +73,12 @@ export const SidebarCatalog: React.FC<SidebarCatalogProps> = ({ onAddItem }) => 
 
       {/* Catalog List */}
       <div className="flex-1 overflow-y-auto p-3 space-y-2.5">
-        <div className="text-[11px] font-semibold tracking-wider text-slate-400 uppercase px-1">
-          Catalog ({filteredItems.length} items)
+        <div className="flex items-center justify-between px-1 text-[11px] font-semibold tracking-wider text-slate-400 uppercase">
+          <span>Catalog ({filteredItems.length} items)</span>
+          <span className="flex items-center gap-1 text-[10px] text-amber-400 font-mono">
+            <Ruler size={11} />
+            Exact Inches
+          </span>
         </div>
 
         {filteredItems.map((item) => {
@@ -113,14 +117,15 @@ export const SidebarCatalog: React.FC<SidebarCatalogProps> = ({ onAddItem }) => 
                 </button>
               </div>
 
-              {/* Badges / Dimensions */}
+              {/* Exact Dimensions & Badges */}
               <div className="mt-2.5 flex items-center justify-between text-[10px] border-t border-[#1E3A5F]/70 pt-2">
-                <span className="text-slate-400 font-mono">
-                  {item.width}'W × {item.depth}'D × {item.height}'H
+                <span className="text-amber-400/90 font-mono font-medium">
+                  {item.widthInches}"W × {item.depthInches}"D × {item.heightInches}"H
                 </span>
 
                 {item.isOfficialIMSA ? (
-                  <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 px-1.5 py-0.5 rounded font-semibold tracking-wide">
+                  <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 px-1.5 py-0.5 rounded font-semibold tracking-wide flex items-center gap-1">
+                    <ShieldCheck size={11} />
                     IMSA Issued
                   </span>
                 ) : (
@@ -152,9 +157,9 @@ export const SidebarCatalog: React.FC<SidebarCatalogProps> = ({ onAddItem }) => 
       <div className="p-3 bg-[#0B131E] border-t border-[#1E3A5F] text-[11px] text-slate-400 flex items-center justify-between">
         <span className="flex items-center gap-1">
           <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
-          Res Life Compliant
+          Res Life Verified
         </span>
-        <span className="font-mono text-slate-500">1 unit = 1 ft</span>
+        <span className="font-mono text-slate-400">1 grid = 12″ (1 ft)</span>
       </div>
     </aside>
   );

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { CameraViewMode, LightingMode, RoomConfig, RoomType } from '../types';
 import { 
   Box, 
@@ -100,19 +100,19 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
               onChange={(e) => {
                 const t = e.target.value as RoomType;
                 if (t === 'standard-double') {
-                  onUpdateRoomConfig({ type: t, width: 12, length: 15, hasQuadDoor: false });
+                  onUpdateRoomConfig({ type: t, width: 11.67, length: 15.0, hasQuadDoor: false });
                 } else if (t === 'corner-l-room') {
-                  onUpdateRoomConfig({ type: t, width: 14, length: 16, hasQuadDoor: false });
+                  onUpdateRoomConfig({ type: t, width: 14.0, length: 16.0, hasQuadDoor: false });
                 } else if (t === 'quad-suite') {
-                  onUpdateRoomConfig({ type: t, width: 24, length: 15, hasQuadDoor: true });
+                  onUpdateRoomConfig({ type: t, width: 23.33, length: 15.0, hasQuadDoor: true });
                 } else {
                   onUpdateRoomConfig({ type: 'custom' });
                 }
               }}
               className="bg-[#0B1726] border border-[#223E61] rounded px-2 py-0.5 text-xs font-medium text-slate-200 focus:outline-none focus:border-[#C59B27]"
             >
-              <option value="standard-double">Standard Double (12' × 15')</option>
-              <option value="corner-l-room">Corner L-Room (14' × 16')</option>
+              <option value="standard-double">Standard Double (11′8″ × 15′0″)</option>
+              <option value="corner-l-room">Corner L-Room (14′0″ × 16′0″)</option>
               <option value="quad-suite">Connected Quad Suite</option>
               <option value="custom">Custom Dimensions</option>
             </select>
@@ -120,16 +120,18 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
         </div>
       </div>
 
-      {/* Middle: View Modes & Lighting */}
-      <div className="flex items-center space-x-2">
-        {/* Camera Views */}
-        <div className="bg-[#0B1726] border border-[#1E3A5F] rounded-lg p-0.5 flex items-center space-x-0.5">
+      {/* Center: Camera & Lighting Switchers */}
+      <div className="flex items-center space-x-3">
+        {/* View Mode */}
+        <div className="bg-[#0B1726] p-1 rounded-xl border border-[#223E61] flex items-center space-x-1">
           <button
             onClick={() => onChangeViewMode('orbit-3d')}
-            title="3D Orbit View"
-            className={`px-2.5 py-1 rounded text-xs font-medium flex items-center space-x-1 transition-all ${
-              viewMode === 'orbit-3d' ? 'bg-[#002B49] text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center space-x-1 transition-all ${
+              viewMode === 'orbit-3d'
+                ? 'bg-[#002B49] text-[#F5C242] border border-[#C59B27]/40 shadow-sm'
+                : 'text-slate-300 hover:text-white'
             }`}
+            title="Free 3D Orbit Camera"
           >
             <Box size={14} />
             <span>3D Orbit</span>
@@ -137,142 +139,151 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
 
           <button
             onClick={() => onChangeViewMode('top-down-2d')}
-            title="2D Top-Down Blueprint"
-            className={`px-2.5 py-1 rounded text-xs font-medium flex items-center space-x-1 transition-all ${
-              viewMode === 'top-down-2d' ? 'bg-[#002B49] text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center space-x-1 transition-all ${
+              viewMode === 'top-down-2d'
+                ? 'bg-[#002B49] text-[#F5C242] border border-[#C59B27]/40 shadow-sm'
+                : 'text-slate-300 hover:text-white'
             }`}
+            title="2D Blueprint Floorplan View"
           >
-            <Layers size={14} />
+            <Compass size={14} />
             <span>2D Blueprint</span>
           </button>
 
           <button
             onClick={() => onChangeViewMode('isometric')}
-            title="Isometric Angled View"
-            className={`px-2.5 py-1 rounded text-xs font-medium flex items-center space-x-1 transition-all ${
-              viewMode === 'isometric' ? 'bg-[#002B49] text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center space-x-1 transition-all ${
+              viewMode === 'isometric'
+                ? 'bg-[#002B49] text-[#F5C242] border border-[#C59B27]/40 shadow-sm'
+                : 'text-slate-300 hover:text-white'
             }`}
+            title="Isometric Architectural Angle"
           >
-            <Compass size={14} />
+            <Layers size={14} />
             <span>Isometric</span>
           </button>
 
           <button
             onClick={() => onChangeViewMode('eye-level')}
-            title="Doorway First-Person View"
-            className={`px-2.5 py-1 rounded text-xs font-medium flex items-center space-x-1 transition-all ${
-              viewMode === 'eye-level' ? 'bg-[#002B49] text-white shadow-sm' : 'text-slate-400 hover:text-slate-200'
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center space-x-1 transition-all ${
+              viewMode === 'eye-level'
+                ? 'bg-[#002B49] text-[#F5C242] border border-[#C59B27]/40 shadow-sm'
+                : 'text-slate-300 hover:text-white'
             }`}
+            title="First-Person Doorway Eye Level"
           >
             <Eye size={14} />
-            <span>Walkthrough</span>
+            <span>Door View</span>
           </button>
         </div>
 
         {/* Lighting Mode */}
-        <div className="bg-[#0B1726] border border-[#1E3A5F] rounded-lg p-0.5 flex items-center space-x-0.5">
+        <div className="bg-[#0B1726] p-1 rounded-xl border border-[#223E61] flex items-center space-x-1">
           <button
             onClick={() => onChangeLightingMode('day')}
-            title="Daylight (Natural Window Sun)"
-            className={`p-1.5 rounded transition-all ${
-              lightingMode === 'day' ? 'bg-[#002B49] text-amber-300' : 'text-slate-400 hover:text-slate-200'
+            className={`p-1.5 rounded-lg text-xs transition-colors ${
+              lightingMode === 'day' ? 'bg-[#1E3A5F] text-amber-400' : 'text-slate-400 hover:text-white'
             }`}
+            title="Bright Natural Daylight"
           >
             <Sun size={15} />
           </button>
           <button
             onClick={() => onChangeLightingMode('golden')}
-            title="Golden Hour Sunset"
-            className={`p-1.5 rounded transition-all ${
-              lightingMode === 'golden' ? 'bg-[#002B49] text-orange-400' : 'text-slate-400 hover:text-slate-200'
+            className={`p-1.5 rounded-lg text-xs transition-colors ${
+              lightingMode === 'golden' ? 'bg-[#1E3A5F] text-amber-500' : 'text-slate-400 hover:text-white'
             }`}
+            title="Golden Hour Sunset"
           >
             <Sunset size={15} />
           </button>
           <button
             onClick={() => onChangeLightingMode('night-study')}
-            title="Night Study (Desk and Lamp Glow)"
-            className={`p-1.5 rounded transition-all ${
-              lightingMode === 'night-study' ? 'bg-[#002B49] text-indigo-300' : 'text-slate-400 hover:text-slate-200'
+            className={`p-1.5 rounded-lg text-xs transition-colors ${
+              lightingMode === 'night-study' ? 'bg-[#1E3A5F] text-indigo-400' : 'text-slate-400 hover:text-white'
             }`}
+            title="Late Night Study Lamp Mode"
           >
             <Moon size={15} />
           </button>
         </div>
 
-        {/* Cutaway Toggle */}
+        {/* Wall Cutaway Toggle */}
         <button
           onClick={onToggleCutaway}
-          title={cutawayWalls ? 'Cutaway Walls Active (Easy viewing)' : 'Full Height Walls'}
-          className={`px-2.5 py-1.5 rounded-lg border text-xs font-medium flex items-center space-x-1 transition-all ${
+          className={`px-2.5 py-1.5 rounded-xl border text-xs font-medium transition-all ${
             cutawayWalls
-              ? 'bg-[#0B1726] border-[#007A87] text-[#38BDF8]'
-              : 'bg-[#0B1726] border-[#1E3A5F] text-slate-400'
+              ? 'bg-[#0B1726] border-[#223E61] text-sky-300'
+              : 'bg-[#1E3A5F] border-sky-500/50 text-white shadow-sm'
           }`}
+          title="Toggle Full Walls vs Cutaway Walls"
         >
-          <Sliders size={13} />
-          <span>{cutawayWalls ? 'Cutaway ON' : 'Full Walls'}</span>
+          {cutawayWalls ? 'Cutaway Walls' : 'Full Walls'}
         </button>
       </div>
 
-      {/* Right: Actions, Presets, Rules, Export */}
+      {/* Right: Actions, Modals & Res Life Check */}
       <div className="flex items-center space-x-2">
-        {/* Presets Button */}
+        {/* Presets */}
         <button
           onClick={onOpenPresets}
-          className="bg-gradient-to-r from-amber-600/30 to-amber-500/20 border border-amber-500/50 hover:bg-amber-600/40 text-amber-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition-all shadow-sm"
+          className="bg-[#0B1726] hover:bg-[#16273F] border border-[#223E61] text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-xl flex items-center space-x-1.5 transition-colors"
         >
-          <Sparkles size={14} className="text-amber-400" />
+          <Sparkles size={14} className="text-[#F5C242]" />
           <span>Presets</span>
         </button>
 
-        {/* IMSA Res Life Rules Button */}
+        {/* Move-In Inventory List */}
+        <button
+          onClick={onOpenInventory}
+          className="bg-[#0B1726] hover:bg-[#16273F] border border-[#223E61] text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-xl flex items-center space-x-1.5 transition-colors"
+        >
+          <ShoppingBag size={14} className="text-emerald-400" />
+          <span>Move-In Sheet</span>
+        </button>
+
+        {/* Safety & Policy Checker */}
         <button
           onClick={onOpenRules}
-          className="relative bg-[#0B1726] border border-[#1E3A5F] hover:border-emerald-500/50 text-slate-200 text-xs font-medium px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition-all"
+          className={`text-xs font-bold px-3 py-1.5 rounded-xl flex items-center space-x-1.5 transition-all shadow-sm ${
+            ruleWarningCount > 0
+              ? 'bg-amber-950/80 border border-amber-600/70 text-amber-300 animate-pulse'
+              : 'bg-emerald-950/80 border border-emerald-600/60 text-emerald-300'
+          }`}
         >
-          <ShieldCheck size={14} className={ruleWarningCount > 0 ? 'text-amber-400' : 'text-emerald-400'} />
-          <span>Res Life Check</span>
+          <ShieldCheck size={14} />
+          <span>Handbook Check</span>
           {ruleWarningCount > 0 && (
-            <span className="w-4 h-4 bg-amber-500 text-black text-[10px] font-extrabold rounded-full flex items-center justify-center animate-pulse">
+            <span className="w-4 h-4 rounded-full bg-amber-500 text-black text-[10px] font-black flex items-center justify-center">
               {ruleWarningCount}
             </span>
           )}
         </button>
 
-        {/* Roommate Checklist */}
-        <button
-          onClick={onOpenInventory}
-          className="bg-[#0B1726] border border-[#1E3A5F] hover:border-[#007A87] text-slate-200 text-xs font-medium px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition-all"
-        >
-          <ShoppingBag size={14} className="text-[#007A87]" />
-          <span>Checklist</span>
-        </button>
-
-        {/* Snapshot PNG */}
+        {/* Snapshot Photo */}
         <button
           onClick={onTakeSnapshot}
-          title="Download High-Res 3D Snapshot"
-          className="bg-[#002B49] hover:bg-[#003B66] border border-[#007A87]/50 text-white text-xs font-medium px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition-all shadow-sm"
+          className="bg-[#0B1726] hover:bg-[#16273F] border border-[#223E61] text-slate-300 p-2 rounded-xl transition-colors"
+          title="Save High-Res Snapshot Image"
         >
-          <Camera size={14} />
-          <span>Snapshot</span>
+          <Camera size={15} />
         </button>
 
-        {/* Export JSON */}
+        {/* Export / Share Plan */}
         <button
           onClick={onExportPlan}
-          title="Export Layout File (.json)"
-          className="bg-[#0B1726] border border-[#1E3A5F] hover:border-slate-400 text-slate-300 p-1.5 rounded-lg transition-all"
+          className="bg-[#002B49] hover:bg-[#003B66] text-[#F5C242] border border-[#C59B27]/50 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center space-x-1.5 transition-colors shadow-sm"
+          title="Export Layout as JSON"
         >
-          <Download size={15} />
+          <Download size={14} />
+          <span>Export Plan</span>
         </button>
 
-        {/* Reset */}
+        {/* Reset Layout */}
         <button
           onClick={onResetLayout}
-          title="Reset Room"
-          className="bg-[#0B1726] border border-[#1E3A5F] hover:border-red-500/50 text-slate-400 hover:text-red-400 p-1.5 rounded-lg transition-all"
+          className="bg-[#0B1726] hover:bg-[#16273F] border border-[#223E61] text-slate-400 hover:text-white p-2 rounded-xl transition-colors"
+          title="Reset to Default Preset"
         >
           <RotateCcw size={15} />
         </button>

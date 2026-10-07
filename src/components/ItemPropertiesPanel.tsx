@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { PlacedItem } from '../types';
 import { FURNITURE_CATALOG } from '../data/furnitureCatalog';
 import { 
@@ -11,7 +11,8 @@ import {
   Palette, 
   ArrowUp, 
   ArrowDown,
-  Info
+  Info,
+  ShieldCheck
 } from 'lucide-react';
 
 interface ItemPropertiesPanelProps {
@@ -52,10 +53,10 @@ export const ItemPropertiesPanel: React.FC<ItemPropertiesPanelProps> = ({
   ];
 
   return (
-    <div className="absolute top-20 right-4 w-72 bg-[#0B1726]/95 backdrop-blur-md border border-[#1E3A5F] rounded-2xl p-4 shadow-2xl z-30 select-none text-slate-200">
+    <div className="absolute top-20 right-4 w-76 bg-[#0B1726]/95 backdrop-blur-md border border-[#1E3A5F] rounded-2xl p-4 shadow-2xl z-30 select-none text-slate-200">
       {/* Header */}
       <div className="flex items-start justify-between border-b border-[#1E3A5F] pb-3">
-        <div className="flex items-center space-x-2.5">
+        <div className="flex items-start space-x-2.5">
           <span className="text-2xl p-1 bg-[#16273F] rounded-lg border border-[#223E61]">
             {def.icon}
           </span>
@@ -63,9 +64,14 @@ export const ItemPropertiesPanel: React.FC<ItemPropertiesPanelProps> = ({
             <h3 className="text-xs font-bold text-white leading-tight">
               {def.name}
             </h3>
-            <span className="text-[10px] text-amber-400 font-mono">
-              {def.width}' × {def.depth}' (H: {def.height}')
-            </span>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="text-[10px] text-amber-400 font-mono font-medium">
+                {def.widthInches}″ × {def.depthInches}″ (H: {def.heightInches}″)
+              </span>
+              <span className="text-[9px] text-slate-400 font-mono">
+                [{def.width.toFixed(1)}′ × {def.depth.toFixed(1)}′]
+              </span>
+            </div>
           </div>
         </div>
 
@@ -125,53 +131,55 @@ export const ItemPropertiesPanel: React.FC<ItemPropertiesPanelProps> = ({
             </button>
             <button
               onClick={() => onRotate(selectedItem.instanceId, 180)}
-              className="bg-[#16273F] hover:bg-[#1E3554] border border-[#223E61] py-1.5 rounded-lg flex items-center justify-center text-[10px] font-medium text-slate-200 transition-colors"
+              className="bg-[#16273F] hover:bg-[#1E3554] border border-[#223E61] py-1.5 rounded-lg flex items-center justify-center space-x-1 text-slate-200 transition-colors"
             >
-              Flip 180°
+              <RotateCw size={13} />
+              <span className="text-[10px]">180°</span>
             </button>
           </div>
         </div>
 
-        {/* Height / Elevation if supported or useful */}
-        <div>
-          <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5 flex items-center justify-between">
-            <span>Elevation Above Floor</span>
-            <span className="font-mono text-slate-300">{selectedItem.y.toFixed(1)} ft</span>
-          </label>
-          <div className="grid grid-cols-2 gap-1.5">
-            <button
-              onClick={() => onChangeElevation(selectedItem.instanceId, 0.5)}
-              className="bg-[#16273F] hover:bg-[#1E3554] border border-[#223E61] py-1 rounded-lg flex items-center justify-center space-x-1 text-[11px]"
-            >
-              <ArrowUp size={12} className="text-emerald-400" />
-              <span>Raise +0.5'</span>
-            </button>
-            <button
-              onClick={() => onChangeElevation(selectedItem.instanceId, -0.5)}
-              disabled={selectedItem.y <= 0}
-              className="bg-[#16273F] hover:bg-[#1E3554] disabled:opacity-40 border border-[#223E61] py-1 rounded-lg flex items-center justify-center space-x-1 text-[11px]"
-            >
-              <ArrowDown size={12} className="text-amber-400" />
-              <span>Lower -0.5'</span>
-            </button>
+        {/* Elevation Controls (if allowElevation or captain bed) */}
+        {def.allowElevation && (
+          <div>
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5 flex items-center justify-between">
+              <span>Elevation / Surface Mount</span>
+              <span className="font-mono text-amber-400">{(selectedItem.y * 12).toFixed(0)}″ high</span>
+            </label>
+            <div className="grid grid-cols-2 gap-1.5">
+              <button
+                onClick={() => onChangeElevation(selectedItem.instanceId, 0.5)}
+                className="bg-[#16273F] hover:bg-[#1E3554] border border-[#223E61] py-1.5 rounded-lg flex items-center justify-center space-x-1 text-slate-200"
+              >
+                <ArrowUp size={13} />
+                <span className="text-[10px]">+6″</span>
+              </button>
+              <button
+                onClick={() => onChangeElevation(selectedItem.instanceId, -0.5)}
+                className="bg-[#16273F] hover:bg-[#1E3554] border border-[#223E61] py-1.5 rounded-lg flex items-center justify-center space-x-1 text-slate-200"
+              >
+                <ArrowDown size={13} />
+                <span className="text-[10px]">-6″</span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Color Palette */}
-        {colorOptions && colorOptions.length > 0 && (
+        {colorOptions.length > 1 && (
           <div>
             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5 flex items-center gap-1">
               <Palette size={11} />
-              <span>Theme / Bedding Color</span>
+              <span>Finish & Bedding Tint</span>
             </label>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {colorOptions.map((c) => (
                 <button
                   key={c}
                   onClick={() => onChangeColor(selectedItem.instanceId, c)}
                   style={{ backgroundColor: c }}
-                  className={`w-6 h-6 rounded-full border-2 transition-transform ${
-                    selectedItem.color === c ? 'border-white scale-110 shadow-lg' : 'border-slate-700 hover:scale-105'
+                  className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 ${
+                    selectedItem.color === c ? 'border-amber-400 scale-110 shadow-lg' : 'border-slate-700'
                   }`}
                 />
               ))}
@@ -179,26 +187,29 @@ export const ItemPropertiesPanel: React.FC<ItemPropertiesPanelProps> = ({
           </div>
         )}
 
-        {/* Rule note tooltip */}
+        {/* IMSA Rule Note */}
         {def.imsaRuleNote && (
-          <div className="bg-[#002B49]/50 border border-[#007A87]/40 rounded-lg p-2 text-[10px] text-cyan-200 flex items-start space-x-1.5">
-            <Info size={13} className="shrink-0 text-cyan-400 mt-0.5" />
-            <span>{def.imsaRuleNote}</span>
+          <div className="p-2.5 rounded-xl bg-amber-950/30 border border-amber-800/40 text-[10px] text-amber-300 leading-snug space-y-1">
+            <div className="font-bold flex items-center gap-1 text-amber-400">
+              <ShieldCheck size={12} />
+              <span>IMSA Handbook Rule</span>
+            </div>
+            <p>{def.imsaRuleNote}</p>
           </div>
         )}
 
-        {/* Actions: Duplicate & Delete */}
-        <div className="pt-2 border-t border-[#1E3A5F] flex items-center space-x-2">
+        {/* Duplicate & Delete Actions */}
+        <div className="pt-2 border-t border-[#1E3A5F] grid grid-cols-2 gap-2">
           <button
             onClick={() => onDuplicate(selectedItem.instanceId)}
-            className="flex-1 bg-[#16273F] hover:bg-[#1E3554] border border-[#223E61] py-1.5 rounded-lg flex items-center justify-center space-x-1.5 text-slate-200 transition-colors"
+            className="bg-[#16273F] hover:bg-[#1E3554] border border-[#223E61] py-1.5 rounded-xl flex items-center justify-center space-x-1.5 text-slate-200 transition-colors"
           >
             <Copy size={13} />
-            <span className="text-[11px] font-semibold">Duplicate</span>
+            <span className="text-[11px] font-medium">Duplicate</span>
           </button>
           <button
             onClick={() => onDelete(selectedItem.instanceId)}
-            className="flex-1 bg-red-950/40 hover:bg-red-900/50 border border-red-700/50 py-1.5 rounded-lg flex items-center justify-center space-x-1.5 text-red-300 transition-colors"
+            className="bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/60 text-rose-300 py-1.5 rounded-xl flex items-center justify-center space-x-1.5 transition-colors"
           >
             <Trash2 size={13} />
             <span className="text-[11px] font-semibold">Delete</span>

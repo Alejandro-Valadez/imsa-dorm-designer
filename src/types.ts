@@ -8,6 +8,9 @@ export interface FurnitureItemDefinition {
   width: number; // in feet (X axis)
   depth: number; // in feet (Z axis)
   height: number; // in feet (Y axis)
+  widthInches: number; // exact inches
+  depthInches: number; // exact inches
+  heightInches: number; // exact inches
   isOfficialIMSA: boolean;
   defaultColor: string;
   colorOptions?: string[];
@@ -54,4 +57,5 @@ export interface RuleCheckResult {
   title: string;
   status: 'pass' | 'warning' | 'info';
   message: string;
+  ruleCitation?: string;
 }

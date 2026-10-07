@@ -6,70 +6,85 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
     id: 'imsa-bunk-bed',
     name: 'IMSA Bunk Bed Set (Stacked)',
     category: 'official',
-    description: 'Two Twin XL frames safely stacked with safety guardrails and ladder. Default freshman setup.',
-    width: 3.3, // ~40 inches
-    depth: 7.0, // ~84 inches (Twin XL)
-    height: 5.6, // ~67 inches
+    description: 'Official Twin XL wooden/steel bunkable bed frames stacked with guardrails & ladder. Standard freshman move-in configuration.',
+    width: 3.33, // 40"
+    depth: 7.08, // 85" (Twin XL frame footprint: 40" x 85")
+    height: 5.67, // 68"
+    widthInches: 40,
+    depthInches: 85,
+    heightInches: 68,
     isOfficialIMSA: true,
     defaultColor: '#1e3a5f',
     colorOptions: ['#1e3a5f', '#8B0000', '#2E4F4F', '#4A5568', '#6B46C1'],
-    icon: '🛏️',
+    icon: '🛌',
     meshType: 'bunk_bed',
-    imsaRuleNote: 'Standard move-in configuration. Maximizes floor space for couches & desks.'
+    imsaRuleNote: 'Handbook p.51: Must be placed against a wall. Do not dismantle frames.'
   },
   {
     id: 'imsa-single-bed',
     name: 'IMSA Twin XL Bed (Unbunked)',
     category: 'official',
-    description: 'Single Twin XL spring bed frame and mattress. Standard sleeping height (approx 28").',
-    width: 3.3,
-    depth: 7.0,
-    height: 2.8,
+    description: 'Official Twin XL single bed frame (40" W × 85" L × 34" H with 38" × 80" mattress). Adjustable spring notch frame.',
+    width: 3.33, // 40"
+    depth: 7.08, // 85"
+    height: 2.83, // 34"
+    widthInches: 40,
+    depthInches: 85,
+    heightInches: 34,
     isOfficialIMSA: true,
     defaultColor: '#2b4c7e',
     colorOptions: ['#2b4c7e', '#9B2C2C', '#276749', '#4A5568', '#44337A'],
-    icon: '🛌',
+    icon: '🛏️',
     meshType: 'single_bed',
-    imsaRuleNote: 'Unbunking requires Resident Counselor (RC) approval & proper locking pins.'
+    imsaRuleNote: 'Handbook p.51: Long side must touch a wall. Mattress cannot be placed directly on floor.'
   },
   {
     id: 'imsa-captains-bed',
-    name: 'IMSA Captain / High Loft Bed',
+    name: 'IMSA Lofted Bed (Underbed Clearance)',
     category: 'official',
-    description: 'Elevated single bed allowing standard IMSA 3-drawer dressers or desk underneath.',
-    width: 3.3,
-    depth: 7.0,
+    description: 'Official bed set to high notch frame setting (~30" underbed clearance). Fits IMSA 3-drawer dresser directly underneath.',
+    width: 3.33,
+    depth: 7.08,
     height: 4.5,
+    widthInches: 40,
+    depthInches: 85,
+    heightInches: 54,
     isOfficialIMSA: true,
     defaultColor: '#3182CE',
     colorOptions: ['#3182CE', '#E53E3E', '#38A169', '#718096', '#805AD5'],
     icon: '🪜',
     meshType: 'captains_bed',
-    imsaRuleNote: 'High pin setting on official frame. DIY homemade lofts are strictly forbidden.'
+    imsaRuleNote: 'Official frame pins only. Handbook p.51: DIY homemade lofts are strictly forbidden.'
   },
   {
     id: 'imsa-desk',
     name: 'IMSA Study Desk',
     category: 'official',
-    description: 'Solid oak student desk (42" x 24" x 30") with right-hand utility drawers & wire grommet.',
+    description: 'Official solid oak student desk (42" W × 24" D × 30" H) with 3 utility drawers and modesty panel.',
     width: 3.5, // 42"
     depth: 2.0, // 24"
     height: 2.5, // 30"
+    widthInches: 42,
+    depthInches: 24,
+    heightInches: 30,
     isOfficialIMSA: true,
     defaultColor: '#8C5E35',
     colorOptions: ['#8C5E35', '#A06D3B', '#5A3D28', '#2D3748'],
     icon: '🪵',
     meshType: 'desk',
-    imsaRuleNote: 'Must touch a wall per Res Life safety regulations. Includes 2 keys or drawer locks.'
+    imsaRuleNote: 'Handbook p.51: Must touch at least one wall. 2 desks issued per double room.'
   },
   {
     id: 'imsa-chair',
     name: 'IMSA Desk Chair',
     category: 'official',
-    description: 'Durable wooden desk chair designed to slide completely under the IMSA desk.',
-    width: 1.6,
-    depth: 1.6,
-    height: 2.8,
+    description: 'Durable solid wood student desk chair (19" W × 19" D × 34" H) issued with each desk.',
+    width: 1.58, // 19"
+    depth: 1.58, // 19"
+    height: 2.83, // 34"
+    widthInches: 19,
+    depthInches: 19,
+    heightInches: 34,
     isOfficialIMSA: true,
     defaultColor: '#784E29',
     colorOptions: ['#784E29', '#374151', '#1E3A8A', '#991B1B'],
@@ -80,40 +95,49 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
     id: 'imsa-dresser',
     name: 'IMSA 3-Drawer Dresser',
     category: 'official',
-    description: 'Modular chest of drawers. Can be placed standalone or nested underneath elevated beds.',
+    description: 'Official 3-drawer wooden chest (30" W × 24" D × 30" H). Slides neatly under unbunked bed or stands against wall.',
     width: 2.5, // 30"
-    depth: 1.8, // 22"
+    depth: 2.0, // 24"
     height: 2.5, // 30"
+    widthInches: 30,
+    depthInches: 24,
+    heightInches: 30,
     isOfficialIMSA: true,
     defaultColor: '#8C5E35',
     colorOptions: ['#8C5E35', '#A06D3B', '#5A3D28'],
     icon: '🗄️',
     meshType: 'dresser',
-    imsaRuleNote: 'Fits perfectly under Captain bed setting or alongside wardrobe.'
+    imsaRuleNote: 'Fits under bed in loft position or next to wardrobe against wall.'
   },
   {
     id: 'imsa-wardrobe',
     name: 'IMSA 2-Door Wardrobe / Armoire',
     category: 'official',
-    description: 'Tall wooden standing closet with coat hanging rod, interior top shelf, and bottom drawer.',
-    width: 3.0,
-    depth: 2.0,
-    height: 6.0,
+    description: 'Official free-standing wardrobe (36" W × 24" D × 72" H) with hanging rod, upper shelf, and padlock latch.',
+    width: 3.0, // 36"
+    depth: 2.0, // 24"
+    height: 6.0, // 72"
+    widthInches: 36,
+    depthInches: 24,
+    heightInches: 72,
     isOfficialIMSA: true,
     defaultColor: '#7D512D',
     colorOptions: ['#7D512D', '#54361C'],
     icon: '🚪',
     meshType: 'wardrobe',
-    imsaRuleNote: 'Standard in all 1501-1507 dorm rooms. Must not block doorway or thermostat.'
+    imsaRuleNote: 'Handbook p.51: Must be placed against a wall. Bring your own padlock.'
   },
   {
     id: 'imsa-trash-recycle',
-    name: 'IMSA Waste & Recycling Duo',
+    name: 'IMSA Waste & Recycling Bins',
     category: 'official',
-    description: 'Standard black trash bin and blue IMSA recycling receptacle.',
-    width: 1.8,
-    depth: 1.0,
-    height: 1.3,
+    description: 'Pair of official black trash can and blue IMSA recycling can (each ~12" × 14" × 16" H).',
+    width: 2.0,
+    depth: 1.17,
+    height: 1.33,
+    widthInches: 24,
+    depthInches: 14,
+    heightInches: 16,
     isOfficialIMSA: true,
     defaultColor: '#2563EB',
     colorOptions: ['#2563EB', '#1F2937'],
@@ -123,27 +147,68 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
 
   // LOUNGE & COMFORT (STUDENT ADDITIONS)
   {
-    id: 'dorm-futon',
-    name: 'Compact Dorm Futon / Sofa',
+    id: 'dorm-rug-medium',
+    name: 'Area Rug (5ft × 7ft)',
     category: 'lounge',
-    description: 'Foldable convertible sofa for socializing during wing check and weekend visits.',
-    width: 5.5,
-    depth: 2.8,
-    height: 2.6,
+    description: 'The standard recommended area rug (60" × 84") that fits cleanly between IMSA unbunked beds and desks.',
+    width: 5.0,
+    depth: 7.0,
+    height: 0.05,
+    widthInches: 60,
+    depthInches: 84,
+    heightInches: 1,
     isOfficialIMSA: false,
-    defaultColor: '#374151',
-    colorOptions: ['#374151', '#1E3A8A', '#064E3B', '#4C1D95', '#9A3412'],
-    icon: '🛋️',
-    meshType: 'futon'
+    defaultColor: '#E2E8F0',
+    colorOptions: ['#E2E8F0', '#1E293B', '#78350F', '#1E3A8A', '#047857'],
+    icon: '🧶',
+    meshType: 'rug'
+  },
+  {
+    id: 'dorm-rug-runner',
+    name: 'Runner Rug (2.5ft × 8ft)',
+    category: 'lounge',
+    description: 'Narrow runner rug (30" × 96") designed for the central walkway between beds in a Symmetric Split layout.',
+    width: 2.5,
+    depth: 8.0,
+    height: 0.05,
+    widthInches: 30,
+    depthInches: 96,
+    heightInches: 1,
+    isOfficialIMSA: false,
+    defaultColor: '#1E293B',
+    colorOptions: ['#1E293B', '#E2E8F0', '#78350F', '#047857'],
+    icon: '🧣',
+    meshType: 'rug'
+  },
+  {
+    id: 'gaming-chair',
+    name: 'Approved Rolling Desk Chair',
+    category: 'lounge',
+    description: 'Ergonomic task chair with caster wheels (Handbook p.52: Rolling desk chairs are explicitly allowed with RC approval).',
+    width: 2.08, // 25"
+    depth: 2.08, // 25"
+    height: 3.5, // 42"
+    widthInches: 25,
+    depthInches: 25,
+    heightInches: 42,
+    isOfficialIMSA: false,
+    defaultColor: '#111827',
+    colorOptions: ['#111827', '#DC2626', '#2563EB', '#059669'],
+    icon: '💺',
+    meshType: 'gaming_chair',
+    imsaRuleNote: 'Handbook p.52: Allowed in dorm rooms with RC approval.'
   },
   {
     id: 'beanbag-chair',
-    name: 'Plush Floor Beanbag Chair',
+    name: 'Floor Beanbag Lounger',
     category: 'lounge',
-    description: 'Comfortable oversized reading and gaming chair for relaxation between STEM problem sets.',
-    width: 2.8,
-    depth: 2.8,
-    height: 2.2,
+    description: 'Comfortable soft floor cushion (32" × 32" × 24" H) for studying or reading.',
+    width: 2.67, // 32"
+    depth: 2.67, // 32"
+    height: 2.0, // 24"
+    widthInches: 32,
+    depthInches: 32,
+    heightInches: 24,
     isOfficialIMSA: false,
     defaultColor: '#0284C7',
     colorOptions: ['#0284C7', '#DC2626', '#16A34A', '#7C3AED', '#F59E0B'],
@@ -151,72 +216,72 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
     meshType: 'beanbag'
   },
   {
-    id: 'gaming-chair',
-    name: 'Ergonomic Gaming / Rolling Chair',
+    id: 'dorm-futon',
+    name: 'Convertible Futon / Sofa (Restricted)',
     category: 'lounge',
-    description: 'High-back ergonomic lumbar support chair with smooth caster wheels.',
-    width: 2.2,
-    depth: 2.2,
-    height: 4.0,
+    description: 'Convertible sofa (66" × 32" × 30"). Note: Outside sofas/futons require strict special RC exemption.',
+    width: 5.5,
+    depth: 2.67,
+    height: 2.5,
+    widthInches: 66,
+    depthInches: 32,
+    heightInches: 30,
     isOfficialIMSA: false,
-    defaultColor: '#111827',
-    colorOptions: ['#111827', '#DC2626', '#2563EB', '#059669'],
-    icon: '💺',
-    meshType: 'gaming_chair'
-  },
-  {
-    id: 'dorm-rug-medium',
-    name: 'Cozy Area Rug (5ft × 7ft)',
-    category: 'lounge',
-    description: 'Soft floor rug to cover the IMSA linoleum/tile floor for warmth and homey vibe.',
-    width: 5.0,
-    depth: 7.0,
-    height: 0.05,
-    isOfficialIMSA: false,
-    defaultColor: '#E2E8F0',
-    colorOptions: ['#E2E8F0', '#1E293B', '#78350F', '#1E3A8A', '#047857'],
-    icon: '🧶',
-    meshType: 'rug'
+    defaultColor: '#374151',
+    colorOptions: ['#374151', '#1E3A8A', '#064E3B', '#4C1D95', '#9A3412'],
+    icon: '🛋️',
+    meshType: 'futon',
+    imsaRuleNote: 'Handbook p.52: Outside couches/futons generally prohibited without formal RC exception.'
   },
 
   // TECH & STUDY SETUP
   {
     id: 'dual-monitor-setup',
-    name: 'Dual Monitor & Laptop Station',
+    name: 'Desk Monitor & Laptop Setup',
     category: 'tech',
-    description: 'Twin 27" screens mounted with an open laptop, mechanical keyboard, and XXL desk mat.',
-    width: 3.2,
-    depth: 1.2,
-    height: 1.8,
+    description: 'Desktop setup with external display (Handbook: 22"-27" screen standard), keyboard, and study laptop.',
+    width: 2.83, // 34"
+    depth: 1.17, // 14"
+    height: 1.5, // 18"
+    widthInches: 34,
+    depthInches: 14,
+    heightInches: 18,
     isOfficialIMSA: false,
     defaultColor: '#18181B',
     icon: '🖥️',
     meshType: 'monitor_setup',
     allowElevation: true,
-    imsaRuleNote: 'Must plug into a UL-approved surge protector strip (daisy chaining is prohibited).'
+    imsaRuleNote: 'Handbook p.52: 22" monitor guideline. Daisy-chaining power strips prohibited.'
   },
   {
     id: 'desk-lamp',
-    name: 'Architect LED Desk Lamp',
+    name: 'LED Architect Desk Lamp',
     category: 'tech',
-    description: 'Adjustable swing-arm study light with warm LED color temperature.',
-    width: 0.8,
-    depth: 0.8,
-    height: 1.6,
+    description: 'UL-approved LED study lamp (Handbook: Halogen lamps and multi-head lamps are strictly prohibited for fire safety).',
+    width: 0.83,
+    depth: 0.83,
+    height: 1.5,
+    widthInches: 10,
+    depthInches: 10,
+    heightInches: 18,
     isOfficialIMSA: false,
     defaultColor: '#000000',
     icon: '💡',
     meshType: 'desk_lamp',
-    allowElevation: true
+    allowElevation: true,
+    imsaRuleNote: 'Handbook p.52: LED only. Halogen lamps and open bulbs are strictly forbidden.'
   },
   {
     id: 'whiteboard-easel',
-    name: 'Standing Mobile Whiteboard',
+    name: 'Standing Whiteboard Easel',
     category: 'tech',
-    description: 'Double-sided magnetic dry-erase board for late night calc and physics derivations.',
-    width: 3.0,
+    description: 'Double-sided dry-erase board (32" W × 18" D × 60" H) for physics problem sets and study sessions.',
+    width: 2.67,
     depth: 1.5,
-    height: 5.2,
+    height: 5.0,
+    widthInches: 32,
+    depthInches: 18,
+    heightInches: 60,
     isOfficialIMSA: false,
     defaultColor: '#FFFFFF',
     icon: '📋',
@@ -226,27 +291,51 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
   // APPLIANCES & STORAGE
   {
     id: 'dorm-microfridge',
-    name: 'Mini-Fridge & Microwave Combo',
+    name: 'Compact Refrigerator (≤ 4.3 cu. ft.)',
     category: 'storage',
-    description: 'Compact 3.2 cu. ft. two-door refrigerator with top-mounted microwave.',
-    width: 1.8,
-    depth: 1.8,
-    height: 4.2,
+    description: 'Handbook compliant mini-fridge (20" W × 20" D × 34" H). Maximum 4.3 cu. ft. permitted per room; limit 1 per room.',
+    width: 1.67, // 20"
+    depth: 1.67, // 20"
+    height: 2.83, // 34"
+    widthInches: 20,
+    depthInches: 20,
+    heightInches: 34,
     isOfficialIMSA: false,
     defaultColor: '#1F2937',
     colorOptions: ['#1F2937', '#9CA3AF', '#FFFFFF'],
     icon: '🧊',
     meshType: 'microfridge',
-    imsaRuleNote: 'Limit 1 per room or share with roommate. Maximum 1000W peak consumption.'
+    imsaRuleNote: 'Handbook p.52: Max 4.3 cubic feet. 1 refrigerator per room. Personal microwaves & air fryers banned.'
+  },
+  {
+    id: 'bookshelf-unit',
+    name: 'IMSA Compliant Bookshelf (3ft × 3ft)',
+    category: 'storage',
+    description: 'Wooden bookshelf (36" W × 12" D × 36" H). Exactly complies with Handbook rule: "no larger than 3 feet by 3 feet".',
+    width: 3.0, // 36" (3 ft)
+    depth: 1.0, // 12" (1 ft)
+    height: 3.0, // 36" (3 ft)
+    widthInches: 36,
+    depthInches: 12,
+    heightInches: 36,
+    isOfficialIMSA: false,
+    defaultColor: '#8C5E35',
+    colorOptions: ['#8C5E35', '#2D3748', '#FFFFFF'],
+    icon: '📚',
+    meshType: 'bookshelf',
+    imsaRuleNote: 'Handbook p.52: Must be no larger than 3 feet by 3 feet. Requires RC approval.'
   },
   {
     id: 'rolling-cart',
     name: '3-Tier Rolling Utility Cart',
     category: 'storage',
-    description: 'Narrow wire mesh cart for snacks, tea kettle, mugs, and shower toiletries.',
-    width: 1.4,
-    depth: 1.0,
-    height: 2.8,
+    description: 'Narrow wire mesh cart (17" W × 13" D × 33" H) for toiletries, shower caddy, and study snacks.',
+    width: 1.42,
+    depth: 1.08,
+    height: 2.75,
+    widthInches: 17,
+    depthInches: 13,
+    heightInches: 33,
     isOfficialIMSA: false,
     defaultColor: '#F3F4F6',
     colorOptions: ['#F3F4F6', '#111827', '#0284C7', '#EC4899'],
@@ -254,27 +343,16 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
     meshType: 'rolling_cart'
   },
   {
-    id: 'bookshelf-unit',
-    name: '3-Tier College Bookshelf',
-    category: 'storage',
-    description: 'Vertical wooden shelving unit for AP/STEM textbooks, board games, and binders.',
-    width: 2.4,
-    depth: 1.0,
-    height: 3.8,
-    isOfficialIMSA: false,
-    defaultColor: '#8C5E35',
-    colorOptions: ['#8C5E35', '#2D3748', '#FFFFFF'],
-    icon: '📚',
-    meshType: 'bookshelf'
-  },
-  {
     id: 'laundry-hamper',
     name: 'Foldable Laundry Hamper',
     category: 'storage',
-    description: 'Fabric laundry bin with carry handles for trips to the hall basement washrooms.',
-    width: 1.3,
-    depth: 1.3,
-    height: 2.2,
+    description: 'Fabric laundry basket (15" × 15" × 26" H) for trips to hall basement laundry machines.',
+    width: 1.25,
+    depth: 1.25,
+    height: 2.17,
+    widthInches: 15,
+    depthInches: 15,
+    heightInches: 26,
     isOfficialIMSA: false,
     defaultColor: '#4B5563',
     icon: '🧺',
@@ -282,12 +360,15 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
   },
   {
     id: 'full-mirror',
-    name: 'Full-Length Floor / Wall Mirror',
+    name: 'Over-The-Door / Wall Mirror',
     category: 'storage',
-    description: 'Dorm mirror with beveled frame for checking dress code and outfit.',
-    width: 1.4,
-    depth: 0.3,
-    height: 4.8,
+    description: 'Full-length mirror (16" W × 2" D × 50" H). Must be hung without damaging wall paint.',
+    width: 1.33,
+    depth: 0.25,
+    height: 4.17,
+    widthInches: 16,
+    depthInches: 3,
+    heightInches: 50,
     isOfficialIMSA: false,
     defaultColor: '#1F2937',
     icon: '🪞',
@@ -299,24 +380,31 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
     id: 'imsa-banner',
     name: 'IMSA Titans Wall Pennant',
     category: 'decor',
-    description: 'Official Illinois Math and Science Academy blue & gold spirit banner.',
+    description: 'Official Illinois Math and Science Academy blue & gold spirit banner (painter tape or pushpins only).',
     width: 2.5,
     depth: 0.1,
     height: 1.4,
+    widthInches: 30,
+    depthInches: 1,
+    heightInches: 17,
     isOfficialIMSA: false,
     defaultColor: '#002B49',
     icon: '🚩',
     meshType: 'wall_banner',
-    allowElevation: true
+    allowElevation: true,
+    imsaRuleNote: 'Handbook p.51: Hang with painter tape or pushpins only. No adhesive strips that peel paint.'
   },
   {
     id: 'plant-stand',
     name: 'Potted Succulent / Plant Stand',
     category: 'decor',
-    description: 'Low-maintenance snake plant or pothos in ceramic pot to brighten the room.',
+    description: 'Low-maintenance dorm plant (12" × 12" × 24" H) to brighten up the room windowsill.',
     width: 1.0,
     depth: 1.0,
     height: 2.0,
+    widthInches: 12,
+    depthInches: 12,
+    heightInches: 24,
     isOfficialIMSA: false,
     defaultColor: '#15803D',
     icon: '🪴',
@@ -326,10 +414,13 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
     id: 'acoustic-guitar',
     name: 'Acoustic Guitar & Stand',
     category: 'decor',
-    description: 'Guitar on floor stand for acoustic jams during hall weekend hours.',
-    width: 1.4,
-    depth: 1.2,
+    description: 'Guitar on floor stand (18" × 16" × 42" H) for downtime during hall weekend hours.',
+    width: 1.5,
+    depth: 1.33,
     height: 3.5,
+    widthInches: 18,
+    depthInches: 16,
+    heightInches: 42,
     isOfficialIMSA: false,
     defaultColor: '#B45309',
     icon: '🎸',
@@ -337,62 +428,92 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
   }
 ];
 
+// PRESET LAYOUTS - Accurately planned for 11'8" x 15'0" IMSA Double Room
 export const PRESET_LAYOUTS = [
   {
     id: 'preset-classic-bunked',
-    name: 'IMSA Classic Bunked',
-    description: 'Bunk beds against the left wall, dual desks side-by-side along the window, mini-fridge by the bathroom.',
+    name: 'IMSA Classic Bunked (Max Floor Space)',
+    description: 'Bunk beds stacked against the West wall. Both study desks along the North window wall. Wardrobes against walls. Maximizes central open space for rugs.',
     roomType: 'standard-double' as const,
     items: [
-      { definitionId: 'imsa-bunk-bed', x: -4.0, z: -3.0, y: 0, rotationY: 0, color: '#1e3a5f', owner: 'Shared' },
-      { definitionId: 'imsa-wardrobe', x: -4.2, z: 2.5, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
-      { definitionId: 'imsa-wardrobe', x: -4.2, z: 5.5, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident B' },
-      { definitionId: 'imsa-desk', x: 1.8, z: -6.0, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident A' },
-      { definitionId: 'imsa-chair', x: 1.8, z: -4.6, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident A' },
-      { definitionId: 'imsa-desk', x: -1.8, z: -6.0, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident B' },
-      { definitionId: 'imsa-chair', x: -1.8, z: -4.6, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident B' },
-      { definitionId: 'imsa-dresser', x: 4.2, z: -3.0, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
-      { definitionId: 'imsa-dresser', x: 4.2, z: -0.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
-      { definitionId: 'dorm-futon', x: 4.0, z: 3.5, y: 0, rotationY: -90, color: '#374151', owner: 'Shared' },
-      { definitionId: 'dorm-microfridge', x: 4.3, z: 6.2, y: 0, rotationY: -90, color: '#1F2937', owner: 'Shared' },
+      // Bunk bed stacked on West wall (long side against wall: x = -4.1, z = -1.5)
+      { definitionId: 'imsa-bunk-bed', x: -4.1, z: -1.5, y: 0, rotationY: 0, color: '#1e3a5f', owner: 'Shared' },
+      // Desks side-by-side on North window wall, facing window (rotationY: 180)
+      { definitionId: 'imsa-desk', x: -1.8, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-chair', x: -1.8, z: -5.1, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident A' },
+      { definitionId: 'imsa-desk', x: 1.8, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident B' },
+      { definitionId: 'imsa-chair', x: 1.8, z: -5.1, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident B' },
+      // Wardrobes against East wall (rotationY: -90)
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: -3.5, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident A' },
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: -0.2, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
+      // 3-Drawer dressers side-by-side against East wall lower
+      { definitionId: 'imsa-dresser', x: 4.8, z: 2.8, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-dresser', x: 4.8, z: 5.4, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
+      // Mini-fridge against West wall below bunk bed
+      { definitionId: 'dorm-microfridge', x: -4.8, z: 3.5, y: 0, rotationY: 90, color: '#1F2937', owner: 'Shared' },
+      // Bookshelf (3x3) against West wall
+      { definitionId: 'bookshelf-unit', x: -4.8, z: 5.8, y: 0, rotationY: 90, color: '#8C5E35', owner: 'Shared' },
+      // Cozy 5x7 rug in the open center
       { definitionId: 'dorm-rug-medium', x: 0, z: 0.5, y: 0, rotationY: 0, color: '#1E293B', owner: 'Shared' },
-      { definitionId: 'imsa-trash-recycle', x: 2.0, z: 6.8, y: 0, rotationY: 0, color: '#2563EB', owner: 'Shared' }
+      // Waste duo near entry/bathroom alcove
+      { definitionId: 'imsa-trash-recycle', x: 1.5, z: 6.8, y: 0, rotationY: 0, color: '#2563EB', owner: 'Shared' }
     ]
   },
   {
     id: 'preset-symmetric-split',
-    name: 'Symmetric Split (Twin Twins)',
-    description: 'Unbunked beds on opposite sides for maximum personal privacy. Desks facing the center or window.',
+    name: 'Symmetric Split (Twin Beds on Opposite Walls)',
+    description: 'Unbunked Twin XL beds with long sides against opposite walls (West & East). Study desks facing inwards. Dressers tucked underneath lofted beds.',
     roomType: 'standard-double' as const,
     items: [
-      { definitionId: 'imsa-single-bed', x: -4.2, z: -2.8, y: 0, rotationY: 0, color: '#2b4c7e', owner: 'Resident A' },
-      { definitionId: 'imsa-single-bed', x: 4.2, z: -2.8, y: 0, rotationY: 0, color: '#9B2C2C', owner: 'Resident B' },
-      { definitionId: 'imsa-desk', x: -4.0, z: 3.2, y: 0, rotationY: 90, color: '#8C5E35', owner: 'Resident A' },
-      { definitionId: 'imsa-chair', x: -2.6, z: 3.2, y: 0, rotationY: 90, color: '#784E29', owner: 'Resident A' },
-      { definitionId: 'imsa-desk', x: 4.0, z: 3.2, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
-      { definitionId: 'imsa-chair', x: 2.6, z: 3.2, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
-      { definitionId: 'imsa-wardrobe', x: -4.2, z: 5.8, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
-      { definitionId: 'imsa-wardrobe', x: 4.2, z: 5.8, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
-      { definitionId: 'dorm-microfridge', x: 0, z: -6.0, y: 0, rotationY: 180, color: '#1F2937', owner: 'Shared' },
-      { definitionId: 'dorm-rug-medium', x: 0, z: 0.5, y: 0, rotationY: 0, color: '#E2E8F0', owner: 'Shared' }
+      // Bed A on West wall
+      { definitionId: 'imsa-single-bed', x: -4.1, z: -3.0, y: 0, rotationY: 0, color: '#2b4c7e', owner: 'Resident A' },
+      // Bed B on East wall
+      { definitionId: 'imsa-single-bed', x: 4.1, z: -3.0, y: 0, rotationY: 0, color: '#9B2C2C', owner: 'Resident B' },
+      // Desk A against West wall forward of bed
+      { definitionId: 'imsa-desk', x: -4.8, z: 2.5, y: 0, rotationY: 90, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-chair', x: -3.4, z: 2.5, y: 0, rotationY: 90, color: '#784E29', owner: 'Resident A' },
+      // Desk B against East wall forward of bed
+      { definitionId: 'imsa-desk', x: 4.8, z: 2.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
+      { definitionId: 'imsa-chair', x: 3.4, z: 2.5, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
+      // Wardrobe A against West wall near door
+      { definitionId: 'imsa-wardrobe', x: -4.8, z: 5.8, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
+      // Wardrobe B against East wall near door
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: 5.8, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
+      // Dressers nested under beds or along North wall
+      { definitionId: 'imsa-dresser', x: -1.6, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-dresser', x: 1.6, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident B' },
+      // Mini-fridge against North window wall center
+      { definitionId: 'dorm-microfridge', x: 0, z: -6.4, y: 0, rotationY: 180, color: '#1F2937', owner: 'Shared' },
+      // Runner rug along the center aisle
+      { definitionId: 'dorm-rug-runner', x: 0, z: 0.5, y: 0, rotationY: 0, color: '#1E293B', owner: 'Shared' },
+      { definitionId: 'imsa-trash-recycle', x: 1.8, z: 6.8, y: 0, rotationY: 0, color: '#2563EB', owner: 'Shared' }
     ]
   },
   {
     id: 'preset-l-shape-lounge',
-    name: 'L-Shape & Lounge Corner',
-    description: 'Beds arranged in an L-formation corner, opening up the other half of the room for beanbags and entertainment.',
+    name: 'L-Shape Beds Corner Layout',
+    description: 'Beds arranged along adjacent West and North walls in an L-configuration. Leaves the East wall wide open for study workstations.',
     roomType: 'standard-double' as const,
     items: [
-      { definitionId: 'imsa-single-bed', x: -4.2, z: -3.0, y: 0, rotationY: 0, color: '#2E4F4F', owner: 'Resident A' },
-      { definitionId: 'imsa-single-bed', x: -1.0, z: -6.2, y: 0, rotationY: 90, color: '#4A5568', owner: 'Resident B' },
-      { definitionId: 'imsa-desk', x: 4.0, z: -4.0, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
-      { definitionId: 'imsa-chair', x: 2.6, z: -4.0, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident A' },
-      { definitionId: 'imsa-desk', x: 4.0, z: -0.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
-      { definitionId: 'imsa-chair', x: 2.6, z: -0.5, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
-      { definitionId: 'beanbag-chair', x: -2.5, z: 2.5, y: 0, rotationY: 45, color: '#0284C7', owner: 'Resident A' },
-      { definitionId: 'beanbag-chair', x: 0.5, z: 3.5, y: 0, rotationY: -30, color: '#F59E0B', owner: 'Resident B' },
-      { definitionId: 'dorm-microfridge', x: 4.2, z: 5.5, y: 0, rotationY: -90, color: '#1F2937', owner: 'Shared' },
-      { definitionId: 'dorm-rug-medium', x: -0.5, z: 2.0, y: 0, rotationY: 90, color: '#78350F', owner: 'Shared' }
+      // Bed A along West wall
+      { definitionId: 'imsa-single-bed', x: -4.1, z: -2.0, y: 0, rotationY: 0, color: '#2E4F4F', owner: 'Resident A' },
+      // Bed B along North wall (head to toe L formation)
+      { definitionId: 'imsa-single-bed', x: 1.0, z: -6.2, y: 0, rotationY: 90, color: '#4A5568', owner: 'Resident B' },
+      // Desks along East wall
+      { definitionId: 'imsa-desk', x: 4.8, z: -2.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-chair', x: 3.4, z: -2.5, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident A' },
+      { definitionId: 'imsa-desk', x: 4.8, z: 1.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
+      { definitionId: 'imsa-chair', x: 3.4, z: 1.5, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
+      // Wardrobes against West wall lower
+      { definitionId: 'imsa-wardrobe', x: -4.8, z: 3.5, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
+      { definitionId: 'imsa-wardrobe', x: -4.8, z: 6.2, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident B' },
+      // Dressers
+      { definitionId: 'imsa-dresser', x: 4.8, z: 4.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-dresser', x: 4.8, z: 6.8, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
+      // Lounger beanbags in open corner
+      { definitionId: 'beanbag-chair', x: -1.5, z: 2.5, y: 0, rotationY: 45, color: '#0284C7', owner: 'Resident A' },
+      { definitionId: 'dorm-microfridge', x: 1.5, z: 5.8, y: 0, rotationY: 0, color: '#1F2937', owner: 'Shared' },
+      { definitionId: 'dorm-rug-medium', x: -0.5, z: 2.0, y: 0, rotationY: 0, color: '#78350F', owner: 'Shared' }
     ]
   }
 ];
