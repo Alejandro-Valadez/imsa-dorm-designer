@@ -428,91 +428,159 @@ export const FURNITURE_CATALOG: FurnitureItemDefinition[] = [
   }
 ];
 
-// PRESET LAYOUTS - Accurately planned for 11'8" x 15'0" IMSA Double Room
+// PRESET LAYOUTS - Accurately planned for 11'8" x 15'0" IMSA Double Room with Corner Window & AC
 export const PRESET_LAYOUTS = [
   {
-    id: 'preset-classic-bunked',
-    name: 'IMSA Classic Bunked (Max Floor Space)',
-    description: 'Bunk beds stacked against the West wall. Both study desks along the North window wall. Wardrobes against walls. Maximizes central open space for rugs.',
+    id: 'preset-window-workstations',
+    name: '☀️ Sunny Corner Window Setup (Desks by Window & AC)',
+    description: 'Positions the primary study desk next to the corner window to catch maximum natural daylight. Twin XL beds against West and East walls with wardrobes near the entryway.',
     roomType: 'standard-double' as const,
     items: [
-      // Bunk bed stacked on West wall (long side against wall: x = -4.1, z = -1.5)
-      { definitionId: 'imsa-bunk-bed', x: -4.1, z: -1.5, y: 0, rotationY: 0, color: '#1e3a5f', owner: 'Shared' },
-      // Desks side-by-side on North window wall, facing window (rotationY: 180)
-      { definitionId: 'imsa-desk', x: -1.8, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident A' },
-      { definitionId: 'imsa-chair', x: -1.8, z: -5.1, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident A' },
-      { definitionId: 'imsa-desk', x: 1.8, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident B' },
-      { definitionId: 'imsa-chair', x: 1.8, z: -5.1, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident B' },
-      // Wardrobes against East wall (rotationY: -90)
-      { definitionId: 'imsa-wardrobe', x: 4.8, z: -3.5, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident A' },
-      { definitionId: 'imsa-wardrobe', x: 4.8, z: -0.2, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
-      // 3-Drawer dressers side-by-side against East wall lower
-      { definitionId: 'imsa-dresser', x: 4.8, z: 2.8, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
-      { definitionId: 'imsa-dresser', x: 4.8, z: 5.4, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
-      // Mini-fridge against West wall below bunk bed
-      { definitionId: 'dorm-microfridge', x: -4.8, z: 3.5, y: 0, rotationY: 90, color: '#1F2937', owner: 'Shared' },
-      // Bookshelf (3x3) against West wall
-      { definitionId: 'bookshelf-unit', x: -4.8, z: 5.8, y: 0, rotationY: 90, color: '#8C5E35', owner: 'Shared' },
-      // Cozy 5x7 rug in the open center
+      // Bed A along West wall (x = -4.1, z = 0.8)
+      { definitionId: 'imsa-single-bed', x: -4.1, z: 0.8, y: 0, rotationY: 0, color: '#1e3a5f', owner: 'Resident A' },
+      // Bed B along East wall (x = 4.1, z = 0.8)
+      { definitionId: 'imsa-single-bed', x: 4.1, z: 0.8, y: 0, rotationY: 0, color: '#8B0000', owner: 'Resident B' },
+      // Desk A at North wall near corner window (x = -1.2, z = -6.2, facing window)
+      { definitionId: 'imsa-desk', x: -1.2, z: -6.2, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-chair', x: -1.2, z: -4.9, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident A' },
+      // Desk B along East wall (x = 4.8, z = -5.0, facing wall)
+      { definitionId: 'imsa-desk', x: 4.8, z: -5.0, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
+      { definitionId: 'imsa-chair', x: 3.4, z: -5.0, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
+      // Wardrobe A against West wall near door
+      { definitionId: 'imsa-wardrobe', x: -4.8, z: 5.8, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
+      // Wardrobe B against East wall near door
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: 5.8, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
+      // Central runner rug
+      { definitionId: 'dorm-rug-runner', x: 0, z: 0.5, y: 0, rotationY: 0, color: '#1E293B', owner: 'Shared' },
+      // Mini-fridge
+      { definitionId: 'dorm-microfridge', x: 2.2, z: -6.4, y: 0, rotationY: 180, color: '#1F2937', owner: 'Shared' },
+      // Corner windowsill plant
+      { definitionId: 'plant-stand', x: -4.8, z: -6.5, y: 0, rotationY: 0, color: '#15803D', owner: 'Shared' },
+      // Waste cans near entry
+      { definitionId: 'imsa-trash-recycle', x: 1.8, z: 6.8, y: 0, rotationY: 0, color: '#2563EB', owner: 'Shared' }
+    ]
+  },
+  {
+    id: 'preset-classic-bunked',
+    name: '🛌 Classic Bunked (Maximum Floor Space)',
+    description: 'Bunk beds stacked against the West wall. Study desk by the corner window. Wardrobes against the East wall. Leaves a huge open center floor area for rugs and socializing.',
+    roomType: 'standard-double' as const,
+    items: [
+      // Stacked bunk beds on West wall
+      { definitionId: 'imsa-bunk-bed', x: -4.1, z: 0.2, y: 0, rotationY: 0, color: '#1e3a5f', owner: 'Shared' },
+      // Desk A at North wall facing out (x = -1.2, z = -6.2)
+      { definitionId: 'imsa-desk', x: -1.2, z: -6.2, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-chair', x: -1.2, z: -4.9, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident A' },
+      // Desk B along East wall
+      { definitionId: 'imsa-desk', x: 4.8, z: -5.0, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
+      { definitionId: 'imsa-chair', x: 3.4, z: -5.0, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
+      // Wardrobes against East wall
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: -1.5, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident A' },
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: 1.8, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
+      // Mini-fridge against West wall near door
+      { definitionId: 'dorm-microfridge', x: -4.8, z: 5.5, y: 0, rotationY: 90, color: '#1F2937', owner: 'Shared' },
+      // 3x3 Bookshelf
+      { definitionId: 'bookshelf-unit', x: 2.2, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Shared' },
+      // 5x7 Cozy Area Rug in the wide-open center
       { definitionId: 'dorm-rug-medium', x: 0, z: 0.5, y: 0, rotationY: 0, color: '#1E293B', owner: 'Shared' },
-      // Waste duo near entry/bathroom alcove
+      // Waste duo near entry
       { definitionId: 'imsa-trash-recycle', x: 1.5, z: 6.8, y: 0, rotationY: 0, color: '#2563EB', owner: 'Shared' }
     ]
   },
   {
+    id: 'preset-window-lounge',
+    name: '🪴 Corner Window Lounge & Reading Nook',
+    description: 'Stacked bunk beds on the West wall and workstations along the East wall. Leaves the corner window zone completely open as a sunny lounge with beanbag seating, rug, and plant.',
+    roomType: 'standard-double' as const,
+    items: [
+      // Stacked bunk beds on West wall
+      { definitionId: 'imsa-bunk-bed', x: -4.1, z: 1.5, y: 0, rotationY: 0, color: '#2E4F4F', owner: 'Shared' },
+      // Desks along East wall
+      { definitionId: 'imsa-desk', x: 4.8, z: -0.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-chair', x: 3.4, z: -0.5, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident A' },
+      { definitionId: 'imsa-desk', x: 4.8, z: 3.2, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
+      { definitionId: 'imsa-chair', x: 3.4, z: 3.2, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
+      // Wardrobes against West wall near door
+      { definitionId: 'imsa-wardrobe', x: -4.8, z: 5.8, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: 6.2, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
+      // Sunny Corner Window Lounge Nook
+      { definitionId: 'dorm-rug-medium', x: 0, z: -4.5, y: 0, rotationY: 0, color: '#047857', owner: 'Shared' },
+      { definitionId: 'beanbag-chair', x: -1.5, z: -5.0, y: 0, rotationY: 45, color: '#0284C7', owner: 'Resident A' },
+      { definitionId: 'beanbag-chair', x: 1.8, z: -5.0, y: 0, rotationY: -45, color: '#F59E0B', owner: 'Resident B' },
+      { definitionId: 'plant-stand', x: 4.8, z: -6.4, y: 0, rotationY: 0, color: '#15803D', owner: 'Shared' },
+      { definitionId: 'dorm-microfridge', x: 2.2, z: -6.4, y: 0, rotationY: 180, color: '#1F2937', owner: 'Shared' },
+      { definitionId: 'imsa-trash-recycle', x: 1.8, z: 6.8, y: 0, rotationY: 0, color: '#2563EB', owner: 'Shared' }
+    ]
+  },
+  {
     id: 'preset-symmetric-split',
-    name: 'Symmetric Split (Twin Beds on Opposite Walls)',
-    description: 'Unbunked Twin XL beds with long sides against opposite walls (West & East). Study desks facing inwards. Dressers tucked underneath lofted beds.',
+    name: '↔️ Symmetric Split (Open Window Path)',
+    description: 'Unbunked Twin XL beds with long sides against opposite walls (West & East). Study desks facing inwards. Creates a wide, clear walking aisle straight from the hallway door to the window.',
     roomType: 'standard-double' as const,
     items: [
       // Bed A on West wall
-      { definitionId: 'imsa-single-bed', x: -4.1, z: -3.0, y: 0, rotationY: 0, color: '#2b4c7e', owner: 'Resident A' },
+      { definitionId: 'imsa-single-bed', x: -4.1, z: -2.0, y: 0, rotationY: 0, color: '#2b4c7e', owner: 'Resident A' },
       // Bed B on East wall
-      { definitionId: 'imsa-single-bed', x: 4.1, z: -3.0, y: 0, rotationY: 0, color: '#9B2C2C', owner: 'Resident B' },
+      { definitionId: 'imsa-single-bed', x: 4.1, z: -2.0, y: 0, rotationY: 0, color: '#9B2C2C', owner: 'Resident B' },
       // Desk A against West wall forward of bed
       { definitionId: 'imsa-desk', x: -4.8, z: 2.5, y: 0, rotationY: 90, color: '#8C5E35', owner: 'Resident A' },
       { definitionId: 'imsa-chair', x: -3.4, z: 2.5, y: 0, rotationY: 90, color: '#784E29', owner: 'Resident A' },
       // Desk B against East wall forward of bed
       { definitionId: 'imsa-desk', x: 4.8, z: 2.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
       { definitionId: 'imsa-chair', x: 3.4, z: 2.5, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
-      // Wardrobe A against West wall near door
+      // Wardrobes against West & East walls near entrance
       { definitionId: 'imsa-wardrobe', x: -4.8, z: 5.8, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
-      // Wardrobe B against East wall near door
       { definitionId: 'imsa-wardrobe', x: 4.8, z: 5.8, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
-      // Dressers nested under beds or along North wall
-      { definitionId: 'imsa-dresser', x: -1.6, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident A' },
-      { definitionId: 'imsa-dresser', x: 1.6, z: -6.4, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident B' },
-      // Mini-fridge against North window wall center
-      { definitionId: 'dorm-microfridge', x: 0, z: -6.4, y: 0, rotationY: 180, color: '#1F2937', owner: 'Shared' },
-      // Runner rug along the center aisle
+      // Center runner rug
       { definitionId: 'dorm-rug-runner', x: 0, z: 0.5, y: 0, rotationY: 0, color: '#1E293B', owner: 'Shared' },
+      // Mini-fridge
+      { definitionId: 'dorm-microfridge', x: 2.2, z: -6.4, y: 0, rotationY: 180, color: '#1F2937', owner: 'Shared' },
+      { definitionId: 'imsa-trash-recycle', x: 1.8, z: 6.8, y: 0, rotationY: 0, color: '#2563EB', owner: 'Shared' }
+    ]
+  },
+  {
+    id: 'preset-captains-storage',
+    name: '🪜 Captain’s Lofted Storage (With Dressers)',
+    description: 'Elevated Captain’s bed frames with IMSA 3-drawer dressers nested underneath. Desks placed by the window with wardrobes against the entrance.',
+    roomType: 'standard-double' as const,
+    items: [
+      // Bed A elevated on West wall
+      { definitionId: 'imsa-captains-bed', x: -4.1, z: 0.2, y: 0, rotationY: 0, color: '#3182CE', owner: 'Resident A' },
+      // Bed B elevated on East wall
+      { definitionId: 'imsa-captains-bed', x: 4.1, z: 0.2, y: 0, rotationY: 0, color: '#E53E3E', owner: 'Resident B' },
+      // Dressers tucked under captain beds
+      { definitionId: 'imsa-dresser', x: -4.1, z: 0.2, y: 0, rotationY: 0, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-dresser', x: 4.1, z: 0.2, y: 0, rotationY: 0, color: '#8C5E35', owner: 'Resident B' },
+      // Desk A at North window
+      { definitionId: 'imsa-desk', x: -1.2, z: -6.2, y: 0, rotationY: 180, color: '#8C5E35', owner: 'Resident A' },
+      { definitionId: 'imsa-chair', x: -1.2, z: -4.9, y: 0, rotationY: 0, color: '#784E29', owner: 'Resident A' },
+      // Desk B along East wall
+      { definitionId: 'imsa-desk', x: 4.8, z: -5.0, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
+      { definitionId: 'imsa-chair', x: 3.4, z: -5.0, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
+      // Wardrobes
+      { definitionId: 'imsa-wardrobe', x: -4.8, z: 5.8, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: 5.8, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
+      // Rug
+      { definitionId: 'dorm-rug-medium', x: 0, z: 0.5, y: 0, rotationY: 0, color: '#1E293B', owner: 'Shared' },
       { definitionId: 'imsa-trash-recycle', x: 1.8, z: 6.8, y: 0, rotationY: 0, color: '#2563EB', owner: 'Shared' }
     ]
   },
   {
     id: 'preset-l-shape-lounge',
-    name: 'L-Shape Beds Corner Layout',
+    name: '📐 L-Shape Corner Beds',
     description: 'Beds arranged along adjacent West and North walls in an L-configuration. Leaves the East wall wide open for study workstations.',
     roomType: 'standard-double' as const,
     items: [
-      // Bed A along West wall
-      { definitionId: 'imsa-single-bed', x: -4.1, z: -2.0, y: 0, rotationY: 0, color: '#2E4F4F', owner: 'Resident A' },
-      // Bed B along North wall (head to toe L formation)
-      { definitionId: 'imsa-single-bed', x: 1.0, z: -6.2, y: 0, rotationY: 90, color: '#4A5568', owner: 'Resident B' },
-      // Desks along East wall
+      { definitionId: 'imsa-single-bed', x: -4.1, z: 0.5, y: 0, rotationY: 0, color: '#2E4F4F', owner: 'Resident A' },
+      { definitionId: 'imsa-single-bed', x: 1.5, z: -6.2, y: 0, rotationY: 90, color: '#4A5568', owner: 'Resident B' },
       { definitionId: 'imsa-desk', x: 4.8, z: -2.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
       { definitionId: 'imsa-chair', x: 3.4, z: -2.5, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident A' },
       { definitionId: 'imsa-desk', x: 4.8, z: 1.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
       { definitionId: 'imsa-chair', x: 3.4, z: 1.5, y: 0, rotationY: -90, color: '#784E29', owner: 'Resident B' },
-      // Wardrobes against West wall lower
-      { definitionId: 'imsa-wardrobe', x: -4.8, z: 3.5, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
-      { definitionId: 'imsa-wardrobe', x: -4.8, z: 6.2, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident B' },
-      // Dressers
-      { definitionId: 'imsa-dresser', x: 4.8, z: 4.5, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident A' },
-      { definitionId: 'imsa-dresser', x: 4.8, z: 6.8, y: 0, rotationY: -90, color: '#8C5E35', owner: 'Resident B' },
-      // Lounger beanbags in open corner
+      { definitionId: 'imsa-wardrobe', x: -4.8, z: 5.0, y: 0, rotationY: 90, color: '#7D512D', owner: 'Resident A' },
+      { definitionId: 'imsa-wardrobe', x: 4.8, z: 6.2, y: 0, rotationY: -90, color: '#7D512D', owner: 'Resident B' },
       { definitionId: 'beanbag-chair', x: -1.5, z: 2.5, y: 0, rotationY: 45, color: '#0284C7', owner: 'Resident A' },
-      { definitionId: 'dorm-microfridge', x: 1.5, z: 5.8, y: 0, rotationY: 0, color: '#1F2937', owner: 'Shared' },
+      { definitionId: 'dorm-microfridge', x: 2.0, z: 5.8, y: 0, rotationY: 0, color: '#1F2937', owner: 'Shared' },
       { definitionId: 'dorm-rug-medium', x: -0.5, z: 2.0, y: 0, rotationY: 0, color: '#78350F', owner: 'Shared' }
     ]
   }

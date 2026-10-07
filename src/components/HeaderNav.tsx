@@ -14,7 +14,8 @@ import {
   Sparkles, 
   Download, 
   RotateCcw,
-  Sliders
+  Wand2,
+  Grid
 } from 'lucide-react';
 
 interface HeaderNavProps {
@@ -29,10 +30,13 @@ interface HeaderNavProps {
   onOpenPresets: () => void;
   onOpenRules: () => void;
   onOpenInventory: () => void;
+  onOpenWizard: () => void;
   onTakeSnapshot: () => void;
   onExportPlan: () => void;
   onResetLayout: () => void;
   ruleWarningCount: number;
+  snapGrid: number;
+  onChangeSnapGrid: (val: number) => void;
 }
 
 export const HeaderNav: React.FC<HeaderNavProps> = ({
@@ -47,10 +51,13 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   onOpenPresets,
   onOpenRules,
   onOpenInventory,
+  onOpenWizard,
   onTakeSnapshot,
   onExportPlan,
   onResetLayout,
   ruleWarningCount,
+  snapGrid,
+  onChangeSnapGrid,
 }) => {
   return (
     <header className="h-16 bg-[#001D33] border-b border-[#1E3A5F] px-4 flex items-center justify-between z-20 select-none shadow-lg">
@@ -65,7 +72,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
               IMSA Dorm 3D Studio
             </h1>
             <span className="bg-[#C59B27]/20 text-[#F5C242] border border-[#C59B27]/40 text-[10px] font-bold px-1.5 py-0.5 rounded tracking-wider uppercase">
-              Res Life 3D
+              Official 11′8″ × 15′0″
             </span>
           </div>
           
@@ -208,6 +215,44 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           </button>
         </div>
 
+        {/* Fine Grid Snap Selector */}
+        <div className="bg-[#0B1726] p-1 rounded-xl border border-[#223E61] flex items-center space-x-1">
+          <Grid size={13} className="text-slate-400 ml-1 mr-0.5" />
+          <button
+            onClick={() => onChangeSnapGrid(0.25)}
+            className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all ${
+              snapGrid === 0.25
+                ? 'bg-[#002B49] text-[#F5C242] border border-[#C59B27]/40'
+                : 'text-slate-400 hover:text-white'
+            }`}
+            title="Fine 3-inch grid snap (maximum freedom)"
+          >
+            3″
+          </button>
+          <button
+            onClick={() => onChangeSnapGrid(0.5)}
+            className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all ${
+              snapGrid === 0.5
+                ? 'bg-[#002B49] text-[#F5C242] border border-[#C59B27]/40'
+                : 'text-slate-400 hover:text-white'
+            }`}
+            title="6-inch half-foot grid snap"
+          >
+            6″
+          </button>
+          <button
+            onClick={() => onChangeSnapGrid(1.0)}
+            className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all ${
+              snapGrid === 1.0
+                ? 'bg-[#002B49] text-[#F5C242] border border-[#C59B27]/40'
+                : 'text-slate-400 hover:text-white'
+            }`}
+            title="1-foot major grid snap"
+          >
+            12″
+          </button>
+        </div>
+
         {/* Wall Cutaway Toggle */}
         <button
           onClick={onToggleCutaway}
@@ -224,6 +269,16 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
 
       {/* Right: Actions, Modals & Res Life Check */}
       <div className="flex items-center space-x-2">
+        {/* Setup Wizard Button */}
+        <button
+          onClick={onOpenWizard}
+          className="bg-gradient-to-r from-[#002B49] to-[#004B7A] hover:from-[#00385E] hover:to-[#005B94] border border-[#C59B27]/60 text-[#F5C242] text-xs font-bold px-3 py-1.5 rounded-xl flex items-center space-x-1.5 transition-all shadow-sm"
+          title="Open IMSA Room Setup Wizard"
+        >
+          <Wand2 size={14} />
+          <span>Room Setup</span>
+        </button>
+
         {/* Presets */}
         <button
           onClick={onOpenPresets}

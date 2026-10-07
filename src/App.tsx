@@ -9,6 +9,7 @@ import { ItemPropertiesPanel } from './components/ItemPropertiesPanel';
 import { PolicyCheckerModal } from './components/PolicyCheckerModal';
 import { InventoryModal } from './components/InventoryModal';
 import { PresetSelectorModal } from './components/PresetSelectorModal';
+import { LandingSetupWizard } from './components/LandingSetupWizard';
 
 export const App: React.FC = () => {
   // 1. Room Configuration (IMSA Standard Double: 11'8" x 15'0" living room)
@@ -26,7 +27,7 @@ export const App: React.FC = () => {
     roomNumber: '102',
   });
 
-  // 2. Placed Furniture Items (Default to Classic Bunked preset)
+  // 2. Placed Furniture Items (Default to Sunny Window Workstations preset)
   const [placedItems, setPlacedItems] = useState<PlacedItem[]>(() => {
     const defaultPreset = PRESET_LAYOUTS[0];
     return defaultPreset.items.map((it, idx) => ({
@@ -40,9 +41,10 @@ export const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<CameraViewMode>('orbit-3d');
   const [lightingMode, setLightingMode] = useState<LightingMode>('day');
   const [cutawayWalls, setCutawayWalls] = useState<boolean>(true);
-  const [snapGrid] = useState<number>(0.25); // 3-inch fine snap grid
+  const [snapGrid, setSnapGrid] = useState<number>(0.25); // 3-inch fine snap grid by default
 
   // 4. Modals
+  const [isWizardOpen, setIsWizardOpen] = useState(true); // Landing setup wizard opens on page load!
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isInventoryModalOpen, setIsInventoryModalOpen] = useState(false);
   const [isPresetsModalOpen, setIsPresetsModalOpen] = useState(false);
@@ -203,8 +205,21 @@ export const App: React.FC = () => {
     });
   };
 
+  const handleApplySetup = (newConfig: Partial<RoomConfig>, items: PlacedItem[]) => {
+    setRoomConfig((prev) => ({ ...prev, ...newConfig }));
+    setPlacedItems(items);
+    setSelectedItemInstanceId(null);
+
+    confetti({
+      particleCount: 75,
+      spread: 70,
+      origin: { y: 0.5 },
+      colors: ['#002B49', '#F5C242', '#007A87', '#10B981'],
+    });
+  };
+
   const handleResetLayout = () => {
-    if (window.confirm('Reset this room back to the IMSA Classic Bunked layout?')) {
+    if (window.confirm('Reset this room back to the IMSA Sunny Window Workstations layout?')) {
       handleApplyPreset(PRESET_LAYOUTS[0].items, PRESET_LAYOUTS[0].roomType);
     }
   };
@@ -252,10 +267,13 @@ export const App: React.FC = () => {
         onOpenPresets={() => setIsPresetsModalOpen(true)}
         onOpenRules={() => setIsRulesModalOpen(true)}
         onOpenInventory={() => setIsInventoryModalOpen(true)}
+        onOpenWizard={() => setIsWizardOpen(true)}
         onTakeSnapshot={handleTakeSnapshot}
         onExportPlan={handleExportPlan}
         onResetLayout={handleResetLayout}
         ruleWarningCount={warningCount}
+        snapGrid={snapGrid}
+        onChangeSnapGrid={setSnapGrid}
       />
 
       {/* Main Workspace */}
@@ -313,6 +331,17 @@ export const App: React.FC = () => {
                 {placedItems.length} pieces
               </div>
             </div>
+
+            <div className="h-6 w-px bg-[#1E3A5F]" />
+
+            <div>
+              <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                Grid Snap
+              </div>
+              <div className="font-bold text-sky-400 font-mono">
+                {snapGrid === 0.25 ? '3 inches' : snapGrid === 0.5 ? '6 inches' : '12 inches'}
+              </div>
+            </div>
           </div>
 
           {/* HUD Bottom Left Legend */}
@@ -326,8 +355,8 @@ export const App: React.FC = () => {
               PTAC Unit Zone (2ft buffer)
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-teal-500/80"></span>
-              En-Suite Private Bath
+              <span className="w-2.5 h-2.5 rounded-full bg-indigo-500/80"></span>
+              En-Suite Private Bath (Shower, Toilet & Sink)
             </span>
           </div>
 
@@ -347,6 +376,14 @@ export const App: React.FC = () => {
 
       {/* Hidden File Input for JSON import */}
       <input type="file" ref={fileInputRef} className="hidden" accept=".json" />
+
+      {/* Landing / Move-In Setup Wizard */}
+      <LandingSetupWizard
+        isOpen={isWizardOpen}
+        onClose={() => setIsWizardOpen(false)}
+        roomConfig={roomConfig}
+        onApplySetup={handleApplySetup}
+      />
 
       {/* Modals */}
       <PolicyCheckerModal

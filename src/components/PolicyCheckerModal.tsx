@@ -61,7 +61,6 @@ export const PolicyCheckerModal: React.FC<PolicyCheckerModalProps> = ({
   const centerBlocked = placedItems.some((item) => {
     const def = FURNITURE_CATALOG.find((d) => d.id === item.definitionId);
     if (!def || def.category === 'decor' || item.y > 2.0) return false;
-    // If a massive tall item is right in the middle blocking the window path
     return Math.abs(item.x) < 1.0 && Math.abs(item.z) < 2.0 && def.height > 3.0;
   });
 
@@ -84,7 +83,10 @@ export const PolicyCheckerModal: React.FC<PolicyCheckerModalProps> = ({
   }
 
   // 3. PTAC (Heating / AC) 2-Foot Clearance Rule
-  const ptacX = 0;
+  // Official IMSA architecture: PTAC unit is in the corner under the corner window!
+  const windowWidth = 4.0;
+  const cornerJamb = 0.5;
+  const ptacX = -roomConfig.width / 2 + cornerJamb + windowWidth / 2;
   const ptacZ = -roomConfig.length / 2 + 0.4;
   const ptacBlocked = placedItems.some((item) => {
     const def = FURNITURE_CATALOG.find((d) => d.id === item.definitionId);
@@ -92,50 +94,47 @@ export const PolicyCheckerModal: React.FC<PolicyCheckerModalProps> = ({
     // Check if within 2.0 feet in front of the PTAC unit
     const dx = Math.abs(item.x - ptacX);
     const dz = item.z - ptacZ;
-    return dx < 2.5 && dz > 0 && dz < 2.0;
+    return dx < 2.2 && dz > 0 && dz < 2.0;
   });
 
   if (ptacBlocked) {
     checks.push({
-      title: 'PTAC Unit Clearance Violation (< 2 Feet)',
+      title: 'Corner PTAC Unit Clearance Violation (< 2 Feet)',
       status: 'warning',
-      desc: 'Furniture is placed within 2.0 ft of the wall heating/air conditioning unit.',
+      desc: 'Furniture is placed within 2.0 ft of the corner wall heating/air conditioning unit.',
       details: 'Handbook p.51: "Furniture and other items must remain at least two feet from the PTAC unit" to prevent overheating, fire hazards, and airflow blockages.',
       citation: 'Handbook p.51 (PTAC Clearance)'
     });
   } else {
     checks.push({
-      title: 'PTAC Unit 2-Foot Clearance',
+      title: 'Corner PTAC Unit 2-Foot Clearance',
       status: 'pass',
-      desc: 'Heating and air conditioning unit has 2+ feet of unobstructed buffer space.',
+      desc: 'Corner heating and air conditioning unit has 2+ feet of unobstructed buffer space.',
       details: 'Maintains optimal airflow and complies with residential fire code safety.',
       citation: 'Handbook p.51 (PTAC Clearance)'
     });
   }
 
-  // 4. Wall Contact Rule (Major Furniture against walls)
+  // 4. Wall Placement Rule (Beds & Wardrobes against walls)
   const bedsAndWardrobes = placedItems.filter(
     (i) => i.definitionId === 'imsa-bunk-bed' || i.definitionId === 'imsa-single-bed' || i.definitionId === 'imsa-wardrobe'
   );
-  const floatingMajorItem = bedsAndWardrobes.find((item) => {
+  const floatingItem = bedsAndWardrobes.find((item) => {
     const def = FURNITURE_CATALOG.find((d) => d.id === item.definitionId);
     if (!def) return false;
     const halfW = roomConfig.width / 2;
     const halfL = roomConfig.length / 2;
-    // Check distance to all 4 walls
     const distToLeft = Math.abs(item.x - (-halfW));
     const distToRight = Math.abs(item.x - halfW);
     const distToNorth = Math.abs(item.z - (-halfL));
     const distToSouth = Math.abs(item.z - halfL);
     const minDist = Math.min(distToLeft, distToRight, distToNorth, distToSouth);
-    // If distance from center of item to nearest wall is > (item dimension / 2 + 1.2 ft), it's floating
-    const itemMaxExtent = Math.max(def.width, def.depth) / 2;
-    return minDist > itemMaxExtent + 1.2;
+    return minDist > Math.max(def.width, def.depth) / 2 + 1.2;
   });
 
-  if (floatingMajorItem) {
+  if (floatingItem) {
     checks.push({
-      title: 'Major Furniture Not Against Wall',
+      title: 'Furniture Not Against Wall',
       status: 'warning',
       desc: 'A bed or wardrobe is floating in the center of the room.',
       details: 'Handbook p.51: "One side of all furniture, including the long side of the bed and the wardrobe, must be against a wall."',
@@ -275,7 +274,7 @@ export const PolicyCheckerModal: React.FC<PolicyCheckerModalProps> = ({
 
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-[#16273F] transition-colors"
+            className="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-[#16273F] transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -336,9 +335,9 @@ export const PolicyCheckerModal: React.FC<PolicyCheckerModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="bg-[#002B49] hover:bg-[#003B66] text-[#F5C242] border border-[#C59B27]/50 font-bold px-4 py-1.5 rounded-xl transition-all shadow-sm"
+            className="bg-[#002B49] hover:bg-[#003B66] text-[#F5C242] border border-[#C59B27]/50 font-bold px-4 py-1.5 rounded-xl transition-all shadow-sm cursor-pointer"
           >
-            Done
+            Close Policy Checker
           </button>
         </div>
       </div>
