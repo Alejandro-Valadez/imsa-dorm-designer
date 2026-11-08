@@ -1,82 +1,63 @@
-﻿# 🏠 IMSA Dorm Room 3D Studio
+# 🏠 IMSA Dorm Room 3D Studio
 
-An interactive 3D layout planner and dorm designer built specifically for students at the **Illinois Mathematics and Science Academy (IMSA)** in Aurora, IL. 
+A 3D room planner for students at the Illinois Mathematics and Science Academy (IMSA). Lay out your residence hall room before move-in day, check it against the residential handbook, and send your roommate a shopping list.
 
-Inspired by 3D room planners and equipment layout engines, this application allows future and current IMSA students to realistically test and design their residence hall rooms before move-in day.
+**[Try it at imsa-dorm-designer.vercel.app](https://imsa-dorm-designer.vercel.app)**
 
----
+A student project, not affiliated with or endorsed by IMSA. The rule checks cite the residential handbook, but your room may not match the templates exactly. Measure it and check with your RC before you move furniture.
 
-## ✨ Features
+## What you can do
 
-- **Accurate IMSA Residence Hall Blueprints**:
-  - **Standard Double** (12' × 15' living space with private en-suite bathroom alcove)
-  - **Corner L-Rooms** (14' × 16' end-wing units)
-  - **Connected Quad Suites** (24' × 15' double rooms with central adjoining quad door)
-  - **Customizable Dimensions** (adjust width and length)
-  - Select your specific Hall (1501 to 1507) and Wing (A, B, C, or D).
+**Set up your room.** Pick a room type (standard double, corner L-room, quad suite, or custom width and length), your hall (1501 to 1507), and your wing. The standard double starts at 11'8" by 15'.
 
-- **Complete Official IMSA & Student Furniture Catalog**:
-  - 🎓 **Official IMSA-Issued Furniture**: Twin XL Bunk Beds, Single Unbunked Beds, Captain / Loft Beds, Solid Oak Study Desks, Desk Chairs, 3-Drawer Dressers, 2-Door Wardrobes, Trash & Recycling Cans.
-  - 🛋️ **Lounge & Comfort**: Futon sofas, floor gaming beanbag loungers, ergonomic rolling gaming chairs, 5'×7' area rugs.
-  - 💻 **Tech & Study Setup**: Dual monitor + laptop battlestation with desk mats, architect swing-arm lamps, standing mobile whiteboard easels.
-  - 🧊 **Appliances & Storage**: MicroFridge combo (mini-fridge + microwave), 3-tier rolling utility cart, college bookshelf, collapsible laundry hampers, full-length mirrors.
-  - ✨ **Decor & Spirit**: IMSA Titans banners, succulents/plant stands, acoustic guitars.
+**Furnish it.** 24 furniture pieces in five groups:
 
-- **Interactive 3D Controls**:
-  - **Direct Drag & Drop**: Click & drag furniture smoothly across the floor with automatic 6-inch grid snapping.
-  - **Rotation & Elevation**: Rotate 90° / 180° or adjust elevation (stack items on desks or under elevated beds).
-  - **Bedding & Color Customizer**: Change comforter colors, upholstery fabrics, and finishes.
-  - **Multi-Angle Camera Modes**: 3D Orbit, 2D Top-Down Blueprint, Isometric Angled, and First-Person Walkthrough (standing in doorway).
-  - **Dynamic Lighting**: Daylight (window sunlight with real-time shadows), Golden Hour Sunset, and Night Study (warm desk lamp glow & fairy lights).
-  - **Cutaway Walls**: Toggle cutaway wall height to easily view interior arrangements without clipping.
+| Group | Examples |
+|---|---|
+| School-issued | Twin XL bunk beds, single beds, captain's loft beds, study desks, desk chairs, dressers, wardrobes |
+| Lounge | Futon, beanbag, gaming chair, area rug |
+| Tech and study | Dual-monitor desk setup, swing-arm lamp, rolling whiteboard |
+| Appliances and storage | MicroFridge, rolling cart, bookshelf, hamper, mirror |
+| Decor | Titans pennant, plant stand, guitar |
 
-- **IMSA Res Life Policy & Safety Validator**:
-  - Validates **36" clear emergency egress** to the hallway door.
-  - Verifies **private bathroom door swing clearance**.
-  - Reminds students of the **unbunking approval policy** and proper locking pins.
-  - Warns against overloading electrical circuits with multiple MicroFridges (>1000W limit).
-  - Checks for issued desk completeness.
+Drag pieces across the floor with 6-inch grid snapping, rotate them, stack them (on a desk or under a lofted bed), and change bedding and fabric colors.
 
-- **Roommate Coordination & Export**:
-  - **Move-in Checklist**: Categorizes gear by Resident A, Resident B, and Shared items.
-  - **1-Click Clipboard Export**: Copy formatted Markdown shopping checklist to share directly on Discord or SMS.
-  - **High-Res Snapshot**: 1-click 3D camera screenshot export as PNG.
-  - **JSON Save & Load**: Save layouts and share `.json` room design files.
+**Start from a layout.** 6 presets, including Classic Bunked (most floor space), Symmetric Split (open path to the window), and L-Shape Corner Beds.
 
-- **Popular 1-Click Presets**:
-  - *IMSA Classic Bunked* (max floor space for lounge & fridge)
-  - *Symmetric Split* (unbunked twin beds on opposite walls)
-  - *L-Shape & Lounge Corner* (angled beds with open hangout space)
+**Look at it four ways.** 3D orbit, 2D blueprint, isometric, and first-person from the doorway. Switch between daylight, golden hour, and night-study lighting, and lower the walls to see inside.
 
----
+**Check the rules.** The policy checker runs 8 checks and cites the handbook page for each:
 
-## 🚀 Getting Started
+1. 36" clear path at the hallway door
+2. Clear path from the door to the window
+3. 2 feet of clearance around the corner PTAC (heating and AC) unit
+4. Furniture placed against walls
+5. Bathroom door can swing open
+6. Unbunked beds flagged for RC notification
+7. Both school-issued study desks present
+8. One refrigerator per room (4.3 cu. ft. or smaller)
 
-### Prerequisites
-- Node.js (v18+)
-- npm or yarn
+**Share it.** A move-in checklist split by Resident A, Resident B, and shared items, copied as Markdown for Discord or text. Also: PNG screenshots and JSON save files you can send to your roommate.
 
-### Installation & Run
+## Run it locally
+
+Needs Node.js 18+ and npm.
 
 ```bash
-# Navigate to the app directory
-cd apps/imsa-dorm-designer
-
-# Install dependencies
+git clone https://github.com/Alejandro-Valadez/imsa-dorm-designer.git
+cd imsa-dorm-designer
 npm install
-
-# Start local dev server
-npm run dev
+npm run dev       # http://localhost:5173
+npm run build     # production build in dist/
 ```
 
-Open **[http://localhost:5173](http://localhost:5173)** in your web browser.
+## How it's built
 
----
+- **Three.js** for the room, furniture meshes, lighting, and shadows (`src/utils/roomBuilder.ts`, `src/utils/meshBuilders.ts`)
+- **React 19 and TypeScript** for the interface (`src/components/`)
+- **Tailwind CSS** in IMSA navy and gold
+- **Vite** for the dev server and build
 
-## 🛠️ Tech Stack
-- **Three.js** (`three`) - Procedural 3D geometries, materials, PBR lighting, and soft shadows.
-- **OrbitControls** - Responsive camera navigation and bounds.
-- **React 19** + **TypeScript** - UI state management, modals, and reactive updates.
-- **Tailwind CSS** - Sleek IMSA navy (`#002B49`) and gold (`#C59B27`) themed UI.
-- **Lucide Icons** - Clean vector iconography.
-- **Canvas Confetti** - Celebratory layout export effects.
+Furniture and presets live in `src/data/furnitureCatalog.ts`. The rule checks live in `src/components/PolicyCheckerModal.tsx`.
+
+Built by Alejandro Valadez.
